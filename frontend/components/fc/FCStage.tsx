@@ -102,8 +102,8 @@ export default function FCStage() {
               <span className="text-[9px] tracking-[0.16em] text-white/30">· paused</span>
             )}
           </div>
-          <div className="relative mt-1 min-h-[24px] text-[15px] leading-snug text-white/90">
-            {caption || " "}
+          <div className="relative mt-1 line-clamp-2 h-[44px] overflow-hidden text-[15px] leading-snug text-white/90">
+            {(caption.length > 150 ? "…" + caption.slice(-150) : caption) || " "}
           </div>
         </div>
       </div>

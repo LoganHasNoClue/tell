@@ -328,14 +328,11 @@ export const useFC = create<FCState>((set, get) => {
             if (m.type !== "Turn") return;
             const tx = (m.transcript || "").trim();
             if (tx) set({ caption: tx }); // live partial words as spoken
-            // fact-check the utterance on turn-end, or after a ~1.1s pause if the
-            // speaker keeps going (debate speech rarely hits a formal turn-end).
+            // fact-check on turn-end, or after a ~1.1s pause if the speaker keeps
+            // going. Split the turn into SENTENCES and check each individually —
+            // judging a whole paragraph at once just returns "unverified".
             const fire = () => {
-              if (tx.length > 4 && !_seenBefore(tx)) {
-                judgedTokens.push(_tokens(tx));
-                if (judgedTokens.length > 60) judgedTokens.shift();
-                judgeLive(tx);
-              }
+              if (tx.length > 4) processLiveText(tx);
             };
             if (aaiTurnTimer) clearTimeout(aaiTurnTimer);
             if (m.end_of_turn) fire();
