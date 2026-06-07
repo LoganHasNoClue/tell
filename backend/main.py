@@ -16,7 +16,10 @@ import json
 import time
 from pathlib import Path
 
-from fastapi import Body, FastAPI, WebSocket, WebSocketDisconnect
+import os
+import tempfile
+
+from fastapi import Body, FastAPI, File, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -120,6 +123,48 @@ async def api_roast(payload: dict = Body(...)):
     """A short, cocky one-liner about a false claim (spoken by the voice agent)."""
     sc = await _get_self()
     return await sc.roast(payload.get("claim", ""), payload.get("correction", ""))
+
+
+# ---- Live transcription of the playing video's audio (real STT, no precompute) ----
+_whisper = None
+
+
+def _get_whisper():
+    global _whisper
+    if _whisper is None:
+        from faster_whisper import WhisperModel
+
+        _whisper = WhisperModel("base.en", device="cpu", compute_type="int8")
+    return _whisper
+
+
+def _transcribe_file(path: str) -> str:
+    model = _get_whisper()
+    segments, _ = model.transcribe(path, language="en", beam_size=1, vad_filter=True)
+    return " ".join(s.text.strip() for s in segments).strip()
+
+
+@app.post("/api/transcribe")
+async def api_transcribe(audio: UploadFile = File(...)):
+    """Transcribe one short audio chunk captured live from the playing video."""
+    data = await audio.read()
+    if len(data) < 1500:
+        return {"text": ""}
+    suffix = ".webm" if "webm" in (audio.content_type or "") else ".bin"
+    fd, path = tempfile.mkstemp(suffix=suffix)
+    try:
+        with os.fdopen(fd, "wb") as f:
+            f.write(data)
+        text = await asyncio.to_thread(_transcribe_file, path)
+        return {"text": text}
+    except Exception as e:
+        print(f"[transcribe] {e}")
+        return {"text": ""}
+    finally:
+        try:
+            os.unlink(path)
+        except Exception:
+            pass
 
 
 @app.post("/api/selfcheck")

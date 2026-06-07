@@ -17,17 +17,8 @@ export interface Claim {
   source: string;
   source_url: string;
   topic: string;
-  via?: string; // "moss" | "local" — which retriever served this (live mode)
-  moss_ms?: number; // retrieval latency in ms (live mode)
-}
-
-export interface FactCheckFile {
-  scenario: string;
-  mode: string;
-  totals: Record<string, number>;
-  checked: number;
-  flagged: number;
-  claims: Claim[];
+  via?: string;
+  moss_ms?: number;
 }
 
 export interface ScenarioConfig {
@@ -39,37 +30,19 @@ export interface ScenarioConfig {
   captions: string;
 }
 
-export interface Caption {
-  t: number;
-  speaker: string;
-  text: string;
-}
+export interface Caption { t: number; speaker: string; text: string; }
+export interface Popup { key: number; claim: Claim; bornAt: number; }
+export interface Counter { checked: number; false: number; misleading: number; true: number; }
 
-export interface Popup {
-  key: number;
-  claim: Claim;
-  bornAt: number; // ms
-}
-
-export interface Counter {
-  checked: number;
-  false: number;
-  misleading: number;
-  true: number;
-}
-
-const RESOLVE_DELAY = 1.0; // seconds of "analyzing" before a verdict resolves
-const POPUP_TTL = 9000; // ms a flagged popup stays
+const POPUP_TTL = 9000;
 const API = process.env.NEXT_PUBLIC_TELL_API || "http://localhost:8000";
-
-// non-reactive bookkeeping for live mode
-const livePending = new Set<number>();
+const CHUNK_MS = 4000; // length of each live audio chunk sent to STT
 
 interface FCState {
   status: "idle" | "loading" | "ready" | "error";
   config: ScenarioConfig | null;
   mode: string;
-  claims: Claim[];
+  claims: Claim[]; // precomputed (replay fallback only)
   captions: Caption[];
 
   playing: boolean;
@@ -77,15 +50,15 @@ interface FCState {
   duration: number;
 
   counter: Counter;
-  log: Claim[]; // resolved checkable claims, newest first
-  popups: Popup[]; // active flagged cards
-  analyzing: Claim | null; // claim currently being checked
+  log: Claim[];
+  popups: Popup[];
+  analyzing: string | null; // text currently being checked
   caption: string;
 
-  live: boolean; // true = compute verdicts from the backend per claim, in real time
-  liveResults: Record<number, Claim>;
+  live: boolean; // true = real STT of the playing audio; false = precomputed replay
   mossActive: boolean;
   lastMoss: { ms: number; count: number } | null;
+  sttUp: boolean; // backend transcription reachable
 
   videoEl: HTMLVideoElement | null;
 
@@ -102,8 +75,16 @@ interface FCState {
 
 let raf = 0;
 let lastNow = 0;
-let lastApply = -1;
 let popupKey = 1;
+let liveId = 100000;
+
+// --- live audio capture (module-scoped, not reactive) ---
+let audioCtx: AudioContext | null = null;
+let srcNode: MediaElementAudioSourceNode | null = null;
+let srcEl: HTMLVideoElement | null = null;
+let capturing = false;
+let captureDest: MediaStreamAudioDestinationNode | null = null;
+let sttJudged = new Set<string>();
 
 function captionAt(caps: Caption[], t: number): string {
   let cur = "";
@@ -115,125 +96,201 @@ function captionAt(caps: Caption[], t: number): string {
 }
 
 export const useFC = create<FCState>((set, get) => {
-  function stop() {
+  function stopLoop() {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
   }
 
-  /** live mode: verify a single claim against the backend (Moss + LLM), once. */
-  async function checkClaim(c: Claim) {
-    if (livePending.has(c.i)) return;
-    livePending.add(c.i);
+  /** push a verdict produced by the LIVE pipeline into the counter/log/popups */
+  function pushVerdict(text: string, v: any) {
+    const verdict: Verdict = (v.verdict || "unverified") as Verdict;
+    if (!v.checkable && (verdict === "opinion" || verdict === "unverified")) return;
+    const claim: Claim = {
+      i: liveId++,
+      t: get().t,
+      t_end: get().t,
+      text,
+      checkable: !!v.checkable,
+      verdict,
+      claim: v.claim || text,
+      correction: v.correction || "",
+      confidence: v.confidence ?? 0,
+      source: v.source || "",
+      source_url: v.source_url || "",
+      topic: v.topic || "",
+      via: v.via,
+      moss_ms: v.moss_ms,
+    };
+    set((s) => {
+      const counter = { ...s.counter };
+      if (["false", "misleading", "true", "unverified"].includes(verdict)) {
+        counter.checked++;
+        if (verdict === "false") counter.false++;
+        else if (verdict === "misleading") counter.misleading++;
+        else if (verdict === "true") counter.true++;
+      }
+      const log = verdict === "unverified" ? s.log : [claim, ...s.log].slice(0, 40);
+      let popups = s.popups;
+      if (verdict === "false" || verdict === "misleading") {
+        const now = performance.now();
+        popups = [{ key: popupKey++, claim, bornAt: now }, ...s.popups.filter((p) => now - p.bornAt < POPUP_TTL)].slice(0, 3);
+      }
+      return { counter, log, popups };
+    });
+  }
+
+  async function judgeLive(text: string) {
+    set({ analyzing: text });
+    set((s) => ({ lastMoss: s.lastMoss })); // keep
     try {
       const r = await fetch(`${API}/api/check`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ scenario: get().config?.id, text: c.text }),
+        body: JSON.stringify({ scenario: get().config?.id, text }),
       });
       const v = await r.json();
-      const merged: Claim = {
-        ...c,
-        verdict: v.verdict ?? "unverified",
-        checkable: !!v.checkable,
-        claim: v.claim || c.text,
-        correction: v.correction || "",
-        confidence: v.confidence ?? 0,
-        source: v.source || "",
-        source_url: v.source_url || "",
-        topic: v.topic || c.topic || "",
-        via: v.via,
-        moss_ms: v.moss_ms,
-      };
-      set({
-        liveResults: { ...get().liveResults, [c.i]: merged },
-        lastMoss: { ms: v.moss_ms ?? 0, count: v.retrieved_count ?? 0 },
-      });
-      apply(get().t);
-    } catch (e) {
-      console.warn("[fc] live check failed", e);
+      if (v.moss_ms != null) set({ lastMoss: { ms: v.moss_ms, count: v.retrieved_count ?? 0 } });
+      pushVerdict(text, v);
+    } catch {
+      /* backend hiccup — skip this sentence */
     } finally {
-      livePending.delete(c.i);
+      if (get().analyzing === text) set({ analyzing: null });
     }
   }
 
-  /** recompute everything that depends on the clock for time `t` */
+  function processLiveText(text: string) {
+    const sentences = text
+      .split(/(?<=[.?!])\s+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 8);
+    for (const s of sentences) {
+      const key = s.toLowerCase().replace(/[^a-z0-9 ]/g, "");
+      if (sttJudged.has(key)) continue;
+      sttJudged.add(key);
+      judgeLive(s);
+    }
+  }
+
+  async function transcribeChunk(blob: Blob) {
+    try {
+      const fd = new FormData();
+      fd.append("audio", blob, "chunk.webm");
+      const r = await fetch(`${API}/api/transcribe`, { method: "POST", body: fd });
+      const d = await r.json();
+      const text = (d.text || "").trim();
+      if (!text) return;
+      set({ caption: text }); // live transcript shown as it's heard
+      processLiveText(text);
+    } catch {
+      /* ignore a dropped chunk */
+    }
+  }
+
+  function recordChunk(stream: MediaStream) {
+    if (!capturing) return;
+    let rec: MediaRecorder;
+    try {
+      rec = new MediaRecorder(stream, { mimeType: "audio/webm" });
+    } catch {
+      try {
+        rec = new MediaRecorder(stream);
+      } catch {
+        return;
+      }
+    }
+    const blobs: Blob[] = [];
+    rec.ondataavailable = (e) => {
+      if (e.data && e.data.size) blobs.push(e.data);
+    };
+    rec.onstop = () => {
+      const blob = new Blob(blobs, { type: rec.mimeType || "audio/webm" });
+      if (blob.size > 2000 && get().playing) transcribeChunk(blob);
+      if (capturing) recordChunk(stream); // next chunk
+    };
+    rec.start();
+    setTimeout(() => {
+      try {
+        if (rec.state !== "inactive") rec.stop();
+      } catch {
+        /* ignore */
+      }
+    }, CHUNK_MS);
+  }
+
+  function startCapture() {
+    const v = get().videoEl;
+    if (!v || capturing) return;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioCtx.resume();
+      if (!srcNode || srcEl !== v) {
+        srcNode = audioCtx.createMediaElementSource(v);
+        srcEl = v;
+        srcNode.connect(audioCtx.destination); // route to speakers once, so it's audible
+      }
+      captureDest = audioCtx.createMediaStreamDestination();
+      srcNode.connect(captureDest); // tap a copy for STT
+      capturing = true;
+      recordChunk(captureDest.stream);
+    } catch (e) {
+      console.warn("[fc] live capture failed", e);
+    }
+  }
+
+  function stopCapture() {
+    capturing = false;
+    if (srcNode && captureDest) {
+      try { srcNode.disconnect(captureDest); } catch { /* ignore */ }
+    }
+    captureDest = null;
+  }
+
   function apply(t: number) {
-    const { claims, captions, live, liveResults } = get();
+    // LIVE: the STT pipeline owns counter/log/popups/caption — just track the clock
+    if (get().live) {
+      set({ t });
+      return;
+    }
+    // REPLAY (offline fallback): precomputed claims, revealed only after spoken
+    const { claims, captions } = get();
     const counter: Counter = { checked: 0, false: 0, misleading: 0, true: 0 };
     const log: Claim[] = [];
-    let analyzing: Claim | null = null;
-
     for (const c of claims) {
-      const due = t >= c.t;
-      // a claim is only "spoken" once the playhead passes its END — verdicts are
-      // revealed at revealAt, NEVER at the claim's start, so a popup can't appear
-      // before the speaker has actually finished saying it.
+      if (!c.checkable && (c.verdict === "opinion" || c.verdict === "unverified")) continue;
       const revealAt = (c.t_end ?? c.t) + 0.8;
-      let vc: Claim | undefined;
-      let resolved = false;
-
-      if (live) {
-        vc = liveResults[c.i];
-        // compute live as the claim begins (so the verdict is ready by revealAt),
-        // but don't backfill the whole past on a seek (would flood Moss/the LLM).
-        if (due && t - c.t < 12 && !vc) checkClaim(c);
-        if (due && t < revealAt) analyzing = c; // "checking…" while being spoken
-        resolved = t >= revealAt && !!vc; // surface only after fully spoken
-      } else {
-        if (!c.checkable && (c.verdict === "opinion" || c.verdict === "unverified")) continue;
-        vc = c;
-        if (due && t < revealAt) analyzing = c;
-        resolved = t >= revealAt;
-      }
-
-      if (resolved && vc) {
-        const v = vc.verdict;
-        if (vc.checkable && (v === "false" || v === "misleading" || v === "true" || v === "unverified")) {
-          counter.checked++;
-          if (v === "false") counter.false++;
-          else if (v === "misleading") counter.misleading++;
-          else if (v === "true") counter.true++;
-          if (v !== "unverified") log.push(vc);
-        }
+      if (t >= revealAt) {
+        counter.checked++;
+        if (c.verdict === "false") counter.false++;
+        else if (c.verdict === "misleading") counter.misleading++;
+        else if (c.verdict === "true") counter.true++;
+        log.push(c);
       }
     }
     log.reverse();
-
-    // popups: flagged claims spoken recently, kept for TTL, capped
     const now = performance.now();
     let popups = get().popups.filter((p) => now - p.bornAt < POPUP_TTL);
     const existing = new Set(popups.map((p) => p.claim.i));
     for (const c of log) {
       if ((c.verdict === "false" || c.verdict === "misleading") && !existing.has(c.i)) {
-        // popup recency measured from when the claim FINISHED being spoken
         if (t - ((c.t_end ?? c.t) + 0.8) < 6) {
           popups = [{ key: popupKey++, claim: c, bornAt: now }, ...popups].slice(0, 3);
           existing.add(c.i);
         }
       }
     }
-
-    set({
-      t,
-      counter,
-      log: log.slice(0, 40),
-      popups,
-      analyzing,
-      caption: captionAt(captions, t),
-    });
+    set({ t, counter, log: log.slice(0, 40), popups, caption: captionAt(captions, t) });
   }
 
   function loop(now: number) {
     const st = get();
     if (!st.playing) {
-      stop();
+      stopLoop();
       return;
     }
     if (!lastNow) lastNow = now;
     let dt = (now - lastNow) / 1000;
     lastNow = now;
     if (dt > 0.25) dt = 0.25;
-
     const v = st.videoEl;
     let t: number;
     if (v) {
@@ -247,11 +304,20 @@ export const useFC = create<FCState>((set, get) => {
       get().pause();
       return;
     }
-    if (t - lastApply >= 0.05 || t < lastApply) {
-      lastApply = t;
-      apply(t);
-    }
+    apply(t);
     raf = requestAnimationFrame(loop);
+  }
+
+  function resetRun() {
+    sttJudged = new Set();
+    set({
+      t: 0,
+      counter: { checked: 0, false: 0, misleading: 0, true: 0 },
+      log: [],
+      popups: [],
+      analyzing: null,
+      caption: "",
+    });
   }
 
   return {
@@ -269,62 +335,62 @@ export const useFC = create<FCState>((set, get) => {
     analyzing: null,
     caption: "",
     live: false,
-    liveResults: {},
     mossActive: false,
     lastMoss: null,
+    sttUp: false,
     videoEl: null,
+
+    async load(id: string) {
+      stopLoop();
+      stopCapture();
+      set({ status: "loading" });
+      try {
+        const cfg: ScenarioConfig = await fetch(`/scenarios/${id}/scenario.json`, { cache: "no-store" }).then((r) => r.json());
+        const [fc, caps] = await Promise.all([
+          fetch(`/scenarios/${id}/factcheck.json`, { cache: "no-store" }).then((r) => r.json()),
+          fetch(cfg.captions, { cache: "no-store" }).then((r) => r.json()),
+        ]);
+        set({
+          status: "ready",
+          config: cfg,
+          mode: fc.mode,
+          claims: fc.claims,
+          captions: caps,
+          duration: cfg.duration,
+          playing: false,
+          live: false,
+        });
+        resetRun();
+        get().setLive(true); // default: real live transcription if backend is up
+      } catch (e) {
+        console.error("fc load failed", e);
+        set({ status: "error" });
+      }
+    },
 
     async setLive(on: boolean) {
       if (on) {
         try {
           const r = await fetch(`${API}/api/factcheck/${get().config?.id}/status`);
           const j = await r.json();
-          set({ mossActive: !!j.using_moss });
+          set({ mossActive: !!j.using_moss, sttUp: true });
         } catch {
-          console.warn("[fc] backend unreachable — staying on replay");
-          return;
+          console.warn("[fc] backend unreachable — staying on offline replay");
+          set({ sttUp: false });
+          return; // can't do live STT without the backend
         }
+      } else {
+        stopCapture();
       }
-      livePending.clear();
-      set({ live: on, liveResults: {}, popups: [], log: [] });
-      apply(get().t);
-    },
-
-    async load(id: string) {
-      stop();
-      set({ status: "loading" });
-      try {
-        const cfg: ScenarioConfig = await fetch(`/scenarios/${id}/scenario.json`, {
-          cache: "no-store",
-        }).then((r) => r.json());
-        const [fc, caps] = await Promise.all([
-          fetch(`/scenarios/${id}/factcheck.json`, { cache: "no-store" }).then((r) => r.json()),
-          fetch(cfg.captions, { cache: "no-store" }).then((r) => r.json()),
-        ]);
-        const file = fc as FactCheckFile;
-        set({
-          status: "ready",
-          config: cfg,
-          mode: file.mode,
-          claims: file.claims,
-          captions: caps,
-          duration: cfg.duration,
-          t: 0,
-          playing: false,
-          counter: { checked: 0, false: 0, misleading: 0, true: 0 },
-          log: [],
-          popups: [],
-          analyzing: null,
-          caption: "",
-          live: false,
-          liveResults: {},
-        });
-        // default to LIVE: genuinely query Moss + LLM per claim at runtime.
-        // Falls back to the precomputed REPLAY run only if the backend is down.
-        get().setLive(true).catch(() => {});
-      } catch (e) {
-        console.error("fc load failed", e);
-        set({ status: "error" });
+      const wasPlaying = get().playing;
+      get().pause();
+      set({ live: on });
+      resetRun();
+      if (on && wasPlaying) get().play();
+      else if (!on) {
+        const v = get().videoEl;
+        if (v) v.currentTime = 0;
+        apply(0);
       }
     },
 
@@ -335,13 +401,15 @@ export const useFC = create<FCState>((set, get) => {
       set({ playing: true });
       const v = get().videoEl;
       if (v) v.play().catch(() => {});
+      if (st.live) startCapture(); // begin transcribing the audio (gesture-safe)
       lastNow = 0;
-      stop();
+      stopLoop();
       raf = requestAnimationFrame(loop);
     },
     pause() {
       set({ playing: false });
-      stop();
+      stopLoop();
+      stopCapture();
       const v = get().videoEl;
       if (v) v.pause();
     },
@@ -352,12 +420,18 @@ export const useFC = create<FCState>((set, get) => {
       const { duration, videoEl } = get();
       const clamped = Math.max(0, Math.min(duration, t));
       if (videoEl) videoEl.currentTime = clamped;
-      set({ popups: [] });
-      apply(clamped);
+      if (get().live) {
+        // moving the playhead restarts the live transcript from here
+        sttJudged = new Set();
+        set({ t: clamped, popups: [], caption: "" });
+      } else {
+        set({ popups: [] });
+        apply(clamped);
+      }
     },
     restart() {
       get().seek(0);
-      set({ popups: [], log: [] });
+      resetRun();
     },
     registerVideo(el) {
       set({ videoEl: el });
