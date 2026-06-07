@@ -117,11 +117,18 @@ async def api_selffacts():
 
 @app.post("/api/selfcheck")
 async def api_selfcheck(payload: dict = Body(...)):
-    """Verify one self-claim against the personal fact base via Moss. Fast."""
+    """Instant path: verify a structured self-claim (field+value) via Moss. ~ms."""
     sc = await _get_self()
     return await sc.check(
         payload.get("field", ""), payload.get("value", ""), payload.get("text", "")
     )
+
+
+@app.post("/api/selfjudge")
+async def api_selfjudge(payload: dict = Body(...)):
+    """General path: judge ANY spoken self-statement against the dossier (Moss + LLM)."""
+    sc = await _get_self()
+    return await sc.judge(payload.get("text", ""))
 
 
 class Session:

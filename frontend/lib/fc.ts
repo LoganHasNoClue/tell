@@ -165,24 +165,25 @@ export const useFC = create<FCState>((set, get) => {
 
     for (const c of claims) {
       const due = t >= c.t;
+      // a claim is only "spoken" once the playhead passes its END — verdicts are
+      // revealed at revealAt, NEVER at the claim's start, so a popup can't appear
+      // before the speaker has actually finished saying it.
+      const revealAt = (c.t_end ?? c.t) + 0.8;
       let vc: Claim | undefined;
       let resolved = false;
 
       if (live) {
         vc = liveResults[c.i];
-        // only verify claims near the playhead (as they're spoken) — never
-        // backfill the whole past on a seek, which would flood Moss/the LLM.
-        const recent = due && t - c.t < 8;
-        if (recent && !vc) {
-          checkClaim(c); // fire live retrieval + judgment for THIS claim, now
-          analyzing = c;
-        }
-        resolved = due && !!vc;
+        // compute live as the claim begins (so the verdict is ready by revealAt),
+        // but don't backfill the whole past on a seek (would flood Moss/the LLM).
+        if (due && t - c.t < 12 && !vc) checkClaim(c);
+        if (due && t < revealAt) analyzing = c; // "checking…" while being spoken
+        resolved = t >= revealAt && !!vc; // surface only after fully spoken
       } else {
         if (!c.checkable && (c.verdict === "opinion" || c.verdict === "unverified")) continue;
         vc = c;
-        if (due && t < c.t + RESOLVE_DELAY) analyzing = c;
-        resolved = t >= c.t + RESOLVE_DELAY;
+        if (due && t < revealAt) analyzing = c;
+        resolved = t >= revealAt;
       }
 
       if (resolved && vc) {
@@ -204,7 +205,8 @@ export const useFC = create<FCState>((set, get) => {
     const existing = new Set(popups.map((p) => p.claim.i));
     for (const c of log) {
       if ((c.verdict === "false" || c.verdict === "misleading") && !existing.has(c.i)) {
-        if (t - c.t < 6) {
+        // popup recency measured from when the claim FINISHED being spoken
+        if (t - ((c.t_end ?? c.t) + 0.8) < 6) {
           popups = [{ key: popupKey++, claim: c, bornAt: now }, ...popups].slice(0, 3);
           existing.add(c.i);
         }

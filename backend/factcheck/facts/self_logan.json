@@ -1,16 +1,44 @@
 {
   "scenario": "self_logan",
-  "description": "Personal ground-truth facts about the user, indexed in Moss. The live mic page retrieves the relevant fact for each self-claim and buzzes on a contradiction. Add/edit facts here — each needs metadata.field, metadata.value, and metadata.aliases.",
+  "description": "Personal ground-truth dossier about the user (Logan Moray), indexed in Moss. The Truth Mic retrieves the relevant fact(s) for whatever is spoken and flags contradictions. Structured identity facts carry metadata.field/value/aliases for the instant path; the rest are atomic text facts for semantic retrieval + LLM judgment. Compiled June 7, 2026.",
   "facts": [
-    {
-      "id": "name",
-      "text": "The user's name is Logan. Full name Logan Moray. They go by Logan.",
-      "metadata": { "field": "name", "value": "Logan", "aliases": ["logan", "logan moray"] }
-    },
-    {
-      "id": "email",
-      "text": "The user's email address is loganbmoray@gmail.com.",
-      "metadata": { "field": "email", "value": "loganbmoray@gmail.com", "aliases": ["loganbmoray@gmail.com", "loganbmoray"] }
-    }
+    { "id": "name", "text": "His name is Logan Moray. He goes by Logan.", "metadata": { "field": "name", "value": "Logan", "aliases": ["logan", "logan moray"] } },
+    { "id": "birthdate", "text": "Logan was born on December 2, 2004.", "metadata": { "field": "birthdate", "value": "December 2, 2004", "aliases": ["december 2 2004", "december 2nd 2004", "12/2/2004", "2 december 2004"] } },
+    { "id": "age", "text": "Logan is 21 years old (born December 2, 2004; as of June 2026).", "metadata": { "field": "age", "value": "21", "aliases": ["21", "twenty-one", "twenty one"] } },
+    { "id": "birthplace", "text": "Logan was born in California, USA.", "metadata": { "field": "birthplace", "value": "California", "aliases": ["california", "ca"] } },
+    { "id": "nationality", "text": "Logan is a US citizen by birth. His mother is Dutch-born, and he has explored Dutch/EU citizenship.", "metadata": { "field": "nationality", "value": "US citizen", "aliases": ["american", "us citizen", "united states", "u.s."] } },
+    { "id": "based", "text": "Logan is based between California and Southeast Asia, often Bali.", "metadata": { "field": "location", "value": "California and Bali", "aliases": ["california", "bali", "southeast asia", "indonesia"] } },
+    { "id": "highschool", "text": "Logan graduated from Nordhoff High School in June 2023, with academic letters in Math and English.", "metadata": { "field": "highschool", "value": "Nordhoff High School", "aliases": ["nordhoff", "nordhoff high school"] } },
+    { "id": "university", "text": "Logan attends Cal Poly Pomona as a sophomore studying Business Marketing.", "metadata": { "field": "university", "value": "Cal Poly Pomona", "aliases": ["cal poly pomona", "cal poly", "cpp"] } },
+    { "id": "major", "text": "Logan's major is Business Marketing.", "metadata": { "field": "major", "value": "Business Marketing", "aliases": ["business marketing", "marketing", "business"] } },
+    { "id": "company", "text": "Logan co-founded TrendSweep, a short-form / social-video intelligence startup, with Orfeas.", "metadata": { "field": "company", "value": "TrendSweep", "aliases": ["trendsweep", "trend sweep"] } },
+    { "id": "cofounder", "text": "Logan's TrendSweep co-founder is Orfeas, who later left for another startup in LA.", "metadata": { "field": "cofounder", "value": "Orfeas", "aliases": ["orfeas"] } },
+    { "id": "website", "text": "Logan's personal website is loganmoray.com.", "metadata": { "field": "website", "value": "loganmoray.com", "aliases": ["loganmoray.com", "logan moray dot com"] } },
+    { "id": "email", "text": "Logan's email address is loganbmoray@gmail.com.", "metadata": { "field": "email", "value": "loganbmoray@gmail.com", "aliases": ["loganbmoray@gmail.com", "loganbmoray"] } },
+    { "id": "languages", "text": "Logan speaks English natively, elementary Dutch, and is learning Spanish and Mandarin.", "metadata": { "field": "languages", "value": "English (native), Dutch, Spanish, Mandarin", "aliases": ["english", "dutch", "spanish", "mandarin"] } },
+    { "id": "cert", "text": "Logan holds a PADI open-water scuba certification.", "metadata": { "field": "certification", "value": "PADI open water", "aliases": ["padi", "open water"] } },
+    { "id": "camera", "text": "Logan owns a Sony a6700 camera.", "metadata": { "field": "camera", "value": "Sony a6700", "aliases": ["sony a6700", "a6700"] } },
+    { "id": "drone", "text": "Logan owns a DJI Mavic 4 Pro drone.", "metadata": { "field": "drone", "value": "DJI Mavic 4 Pro", "aliases": ["dji mavic 4 pro", "mavic 4 pro", "mavic"] } },
+    { "id": "netherlands", "text": "Logan spent about 3.5 years living in the Netherlands during high school and returned to California in 2020.", "metadata": { "topic": "education" } },
+    { "id": "clarity", "text": "Logan built Clarity, a shipped AI app for communication analysis, manipulation detection, and conflict analysis, with paying users on the App Store.", "metadata": { "field": "app", "value": "Clarity", "aliases": ["clarity"] } },
+    { "id": "trendsweep_products", "text": "TrendSweep's product directions are Atlas (semantic short-form social-video search API for AI agents) and Iris (trend identification and clustering).", "metadata": { "topic": "ventures" } },
+    { "id": "trendsweep_raise", "text": "TrendSweep raised investment around January 2026 and has pivoted multiple times; runway is roughly a couple of months.", "metadata": { "topic": "ventures" } },
+    { "id": "expon", "text": "Logan's earliest venture was Expon (Expon.org): e-commerce/dropshipping that evolved into AI automation and consulting.", "metadata": { "topic": "ventures" } },
+    { "id": "innventure", "text": "In summer 2025 Logan was a remote Business Strategy & Research Intern at Innventure.", "metadata": { "field": "internship", "value": "Innventure", "aliases": ["innventure"] } },
+    { "id": "property_mgmt", "text": "Logan was a Regional Property Manager at LuxeVaca, overseeing 20+ luxury properties across Monterey, Carmel, and Santa Cruz.", "metadata": { "topic": "career" } },
+    { "id": "janelle", "text": "Logan did project management at Janelle Interiors, including a year-long six-figure Ojai Valley Inn engagement.", "metadata": { "topic": "career" } },
+    { "id": "early_jobs", "text": "Logan's early high-school jobs were at Ojai Cafe Emporium, Harvest Moon Ojai, and Vons.", "metadata": { "topic": "career" } },
+    { "id": "started_age", "text": "Logan has run his own ventures since age 16.", "metadata": { "topic": "career" } },
+    { "id": "roles", "text": "Logan is a founder and entrepreneur and a Business Marketing student; he is non-technical but builds with AI tools.", "metadata": { "topic": "identity" } },
+    { "id": "vc", "text": "Logan wants to break into venture capital, starting as a scout and eventually angel investing; he networks at SF startup events.", "metadata": { "topic": "ambitions" } },
+    { "id": "mars", "text": "At 17, Logan reverse-engineered the badge system to get into the invite-only MARS conference and met Jeff Bezos.", "metadata": { "topic": "story" } },
+    { "id": "fitness", "text": "Logan goes to the gym about 6 days a week, focused on building muscle and strength.", "metadata": { "field": "gym", "value": "6 days a week", "aliases": ["six days", "6 days"] } },
+    { "id": "ocean", "text": "Logan freedives, scuba dives, and spearfishes, and cares about marine conservation and coral-reef restoration.", "metadata": { "topic": "interests" } },
+    { "id": "adventure", "text": "Logan enjoys surfing, skydiving, and wingsuiting.", "metadata": { "topic": "interests" } },
+    { "id": "poker", "text": "Logan plays Texas Hold'em and Ultimate Texas Hold'em and follows Bay Area poker.", "metadata": { "topic": "interests" } },
+    { "id": "comfyui", "text": "Logan builds photorealistic AI character pipelines in ComfyUI using SDXL, Flux LoRAs, IP-Adapter, and ControlNet.", "metadata": { "topic": "technical" } },
+    { "id": "yarnak", "text": "Logan runs a hyperrealistic AI video series called Yarnak the Yeti, a sarcastic yeti vlogging about wilderness life.", "metadata": { "topic": "projects" } },
+    { "id": "lifestyle", "text": "Logan wants a location-independent lifestyle, running a meaningful business with the freedom to travel, and to own or rent properties worldwide.", "metadata": { "topic": "aspirations" } },
+    { "id": "skills", "text": "Logan's skills span sales, marketing, operations, business strategy, project management, AI automation, CRM integrations, and GTM positioning.", "metadata": { "topic": "skills" } }
   ]
 }
