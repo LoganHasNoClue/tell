@@ -15,6 +15,8 @@ const STOP = new Set([
   "the", "a", "an", "my", "this", "that", "here", "there", "home", "work",
   "school", "college", "university", "gym", "store", "place", "company",
   "startup", "business", "it", "them", "us", "you", "people", "everyone",
+  // negations — never treat these as a claimed value ("my name is NOT joshua")
+  "not", "no", "never", "nope", "none", "nobody", "n't",
 ]);
 
 function cleanValue(v: string): string | null {
@@ -269,18 +271,22 @@ export default function LivePage() {
         else interimChunk += res[0].transcript;
       }
       if (finalChunk) {
+        // FINAL utterance: full identity check (all fields) + general judge.
+        // Doing the non-name checks only on finals means we never fire on a
+        // half-spoken number ("I'm twenty…" before "…one") or a partial phrase.
         finalRef.current += finalChunk + " ";
-        judgeSentence(finalChunk.trim()); // general judge AFTER the sentence is spoken
+        const fc = finalChunk.trim();
+        for (const c of extractClaims(fc)) processFast(c.field, c.value, fc);
+        judgeSentence(fc);
       }
       setTranscript((finalRef.current + interimChunk).slice(-360));
-      const chunk = `${finalChunk} ${interimChunk}`.trim();
-      if (chunk) for (const c of extractClaims(chunk)) processFast(c.field, c.value, chunk); // instant identity path
-      // general judge on interim too (debounced) so non-identity claims don't
-      // wait for the sentence-end pause
+      // INTERIM: only the instant NAME check, so "my name is Josh" still buzzes
+      // mid-sentence. Everything else waits for the finished sentence above.
       const interim = interimChunk.trim();
-      if (interim.length > 10) {
-        if (judgeTimer.current) clearTimeout(judgeTimer.current);
-        judgeTimer.current = setTimeout(() => judgeSentence(interim), 280);
+      if (interim) {
+        for (const c of extractClaims(interim)) {
+          if (c.field === "name") processFast(c.field, c.value, interim);
+        }
       }
     };
     rec.onerror = (e: any) => {
