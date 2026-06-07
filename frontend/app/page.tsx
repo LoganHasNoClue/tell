@@ -65,14 +65,16 @@ function Page() {
           <button
             onClick={() => setLive(!live)}
             className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1 transition active:scale-95"
-            title={live ? "Live: verifying each claim against the backend in real time" : "Replay: showing the precomputed verification run"}
+            title={live
+              ? "LIVE — real data: transcribing the audio and checking each claim in real time"
+              : "DEMO — precomputed run: replays the saved verification, synced to the video (no live calls)"}
           >
             <span
               className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: live ? "var(--green)" : "rgba(255,255,255,0.4)" }}
+              style={{ backgroundColor: live ? "var(--green)" : "var(--amber)" }}
             />
             <span className="text-[10px] font-semibold tracking-[0.16em] text-white/70">
-              {live ? "LIVE" : "REPLAY"}
+              {live ? "LIVE" : "DEMO"}
             </span>
           </button>
           <MossMark />
