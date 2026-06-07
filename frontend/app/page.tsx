@@ -50,6 +50,19 @@ function Page() {
           <span className="hidden text-[12px] text-white/45 sm:block">
             {config?.subtitle}
           </span>
+          <a
+            href="/live"
+            className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1 transition active:scale-95"
+            title="Live mic — fact-check yourself in real time"
+          >
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+              <rect x="9" y="2" width="6" height="12" rx="3" />
+              <path d="M5 10a7 7 0 0 0 14 0M12 17v4" />
+            </svg>
+            <span className="text-[10px] font-semibold tracking-[0.16em] text-white/70">
+              TRUTH MIC
+            </span>
+          </a>
           <button
             onClick={() => setLive(!live)}
             className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1 transition active:scale-95"

@@ -57,8 +57,17 @@ class FactStore:
         from moss import MossClient, DocumentInfo
 
         self._client = MossClient(self.project_id, self.project_key)
+
+        def _str_meta(meta: dict) -> dict:
+            # Moss metadata values must be strings; we keep the rich (list) metadata
+            # locally in self.by_id and only send a stringified copy to the index.
+            out = {}
+            for k, v in (meta or {}).items():
+                out[k] = ", ".join(map(str, v)) if isinstance(v, list) else str(v)
+            return out
+
         docs = [
-            DocumentInfo(id=f["id"], text=f["text"], metadata=f.get("metadata", {}))
+            DocumentInfo(id=f["id"], text=f["text"], metadata=_str_meta(f.get("metadata", {})))
             for f in self.facts
         ]
         try:

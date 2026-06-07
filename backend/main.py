@@ -95,6 +95,35 @@ async def api_claims(scenario_id: str):
     return {"scenario": scenario_id, "claims": build_claims(caps)}
 
 
+# ---- Live mic self-fact-check (fast path: Moss retrieval, no LLM) ----
+_self_checker = None
+
+
+async def _get_self():
+    global _self_checker
+    if _self_checker is None:
+        from factcheck.self import SelfChecker
+
+        _self_checker = SelfChecker()
+        await _self_checker.ensure()
+    return _self_checker
+
+
+@app.get("/api/selffacts")
+async def api_selffacts():
+    sc = await _get_self()
+    return {"fields": sc.fields, "using_moss": sc.store.using_moss}
+
+
+@app.post("/api/selfcheck")
+async def api_selfcheck(payload: dict = Body(...)):
+    """Verify one self-claim against the personal fact base via Moss. Fast."""
+    sc = await _get_self()
+    return await sc.check(
+        payload.get("field", ""), payload.get("value", ""), payload.get("text", "")
+    )
+
+
 class Session:
     """Owns the clock + engine for one WS connection."""
 

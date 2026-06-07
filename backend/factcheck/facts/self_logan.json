@@ -1,0 +1,16 @@
+{
+  "scenario": "self_logan",
+  "description": "Personal ground-truth facts about the user, indexed in Moss. The live mic page retrieves the relevant fact for each self-claim and buzzes on a contradiction. Add/edit facts here — each needs metadata.field, metadata.value, and metadata.aliases.",
+  "facts": [
+    {
+      "id": "name",
+      "text": "The user's name is Logan. Full name Logan Moray. They go by Logan.",
+      "metadata": { "field": "name", "value": "Logan", "aliases": ["logan", "logan moray"] }
+    },
+    {
+      "id": "email",
+      "text": "The user's email address is loganbmoray@gmail.com.",
+      "metadata": { "field": "email", "value": "loganbmoray@gmail.com", "aliases": ["loganbmoray@gmail.com", "loganbmoray"] }
+    }
+  ]
+}
