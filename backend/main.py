@@ -138,7 +138,33 @@ def _get_whisper():
     return _whisper
 
 
+# Hosted STT preference: Groq whisper-large-v3-turbo (fastest + accurate) ->
+# OpenAI gpt-4o-mini-transcribe -> local faster-whisper base.en (fallback).
+def _hosted_stt():
+    groq = os.getenv("GROQ_API_KEY")
+    if groq:
+        return ("https://api.groq.com/openai/v1", groq, os.getenv("TELL_STT_MODEL", "whisper-large-v3-turbo"))
+    oai = os.getenv("OPENAI_API_KEY")
+    if oai:
+        return ("https://api.openai.com/v1", oai, os.getenv("TELL_STT_MODEL", "gpt-4o-mini-transcribe"))
+    return None
+
+
 def _transcribe_file(path: str) -> str:
+    hosted = _hosted_stt()
+    if hosted:
+        base, key, model = hosted
+        try:
+            from openai import OpenAI
+
+            client = OpenAI(base_url=base, api_key=key, timeout=15)
+            with open(path, "rb") as f:
+                out = client.audio.transcriptions.create(
+                    model=model, file=f, language="en", response_format="text"
+                )
+            return (out if isinstance(out, str) else getattr(out, "text", "")).strip()
+        except Exception as e:
+            print(f"[transcribe] hosted STT failed ({model}), falling back to local: {e}")
     model = _get_whisper()
     segments, _ = model.transcribe(path, language="en", beam_size=1, vad_filter=True)
     return " ".join(s.text.strip() for s in segments).strip()

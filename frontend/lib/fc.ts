@@ -36,7 +36,7 @@ export interface Counter { checked: number; false: number; misleading: number; t
 
 const POPUP_TTL = 9000;
 const API = process.env.NEXT_PUBLIC_TELL_API || "http://localhost:8000";
-const CHUNK_MS = 4000; // length of each live audio chunk sent to STT
+const CHUNK_MS = 2500; // length of each live audio chunk sent to STT (Groq is fast)
 
 interface FCState {
   status: "idle" | "loading" | "ready" | "error";
