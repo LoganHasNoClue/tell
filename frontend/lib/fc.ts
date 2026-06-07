@@ -36,7 +36,6 @@ export interface Counter { checked: number; false: number; misleading: number; t
 
 const POPUP_TTL = 9000;
 const API = process.env.NEXT_PUBLIC_TELL_API || "http://localhost:8000";
-const CHUNK_MS = 2500; // length of each live audio chunk sent to STT (Groq is fast)
 
 interface FCState {
   status: "idle" | "loading" | "ready" | "error";
@@ -78,13 +77,74 @@ let lastNow = 0;
 let popupKey = 1;
 let liveId = 100000;
 
-// --- live audio capture (module-scoped, not reactive) ---
+// --- continuous live audio capture (module-scoped, not reactive) ---
+const STT_SR = 16000; // sample rate sent to STT
+const WINDOW_S = 5; // seconds of trailing audio re-transcribed each tick
+const SLIDE_MS = 1100; // how often we re-transcribe the trailing window (live cadence)
 let audioCtx: AudioContext | null = null;
 let srcNode: MediaElementAudioSourceNode | null = null;
 let srcEl: HTMLVideoElement | null = null;
+let workletNode: AudioWorkletNode | null = null;
 let capturing = false;
-let captureDest: MediaStreamAudioDestinationNode | null = null;
-let sttJudged = new Set<string>();
+let frames: Float32Array[] = []; // rolling raw-PCM frames (at ctx.sampleRate)
+let framesLen = 0;
+let ringRate = 48000;
+let slideTimer: ReturnType<typeof setInterval> | null = null;
+let inFlight = false;
+let backoffUntil = 0;
+let judgedTokens: Set<string>[] = []; // token-sets of already-checked sentences
+
+function _tokens(s: string): Set<string> {
+  return new Set(s.toLowerCase().replace(/[^a-z0-9 ]/g, "").split(/\s+/).filter((w) => w.length > 2));
+}
+// already checked if it overlaps a prior sentence a lot (rolling windows repeat)
+function _seenBefore(s: string): boolean {
+  const t = _tokens(s);
+  if (t.size === 0) return true;
+  for (const j of judgedTokens) {
+    let inter = 0;
+    for (const w of t) if (j.has(w)) inter++;
+    if (inter / Math.min(t.size, j.size) >= 0.6) return true;
+  }
+  return false;
+}
+
+/** linear-resample a Float32 buffer from srcRate to STT_SR, return Int16 PCM */
+function toPcm16(buf: Float32Array, srcRate: number): Int16Array {
+  const ratio = srcRate / STT_SR;
+  const outLen = Math.floor(buf.length / ratio);
+  const out = new Int16Array(outLen);
+  for (let i = 0; i < outLen; i++) {
+    const idx = i * ratio;
+    const i0 = Math.floor(idx);
+    const frac = idx - i0;
+    const s = (buf[i0] || 0) * (1 - frac) + (buf[i0 + 1] || 0) * frac;
+    out[i] = Math.max(-1, Math.min(1, s)) * 0x7fff;
+  }
+  return out;
+}
+
+/** wrap Int16 PCM as a 16kHz mono WAV blob */
+function wavBlob(pcm: Int16Array): Blob {
+  const buf = new ArrayBuffer(44 + pcm.length * 2);
+  const dv = new DataView(buf);
+  const wr = (o: number, s: string) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
+  wr(0, "RIFF");
+  dv.setUint32(4, 36 + pcm.length * 2, true);
+  wr(8, "WAVE");
+  wr(12, "fmt ");
+  dv.setUint32(16, 16, true);
+  dv.setUint16(20, 1, true);
+  dv.setUint16(22, 1, true);
+  dv.setUint32(24, STT_SR, true);
+  dv.setUint32(28, STT_SR * 2, true);
+  dv.setUint16(32, 2, true);
+  dv.setUint16(34, 16, true);
+  wr(36, "data");
+  dv.setUint32(40, pcm.length * 2, true);
+  for (let i = 0; i < pcm.length; i++) dv.setInt16(44 + i * 2, pcm[i], true);
+  return new Blob([buf], { type: "audio/wav" });
+}
 
 function captionAt(caps: Caption[], t: number): string {
   let cur = "";
@@ -159,79 +219,90 @@ export const useFC = create<FCState>((set, get) => {
   }
 
   function processLiveText(text: string) {
-    const sentences = text
-      .split(/(?<=[.?!])\s+/)
-      .map((s) => s.trim())
-      .filter((s) => s.length > 8);
-    for (const s of sentences) {
-      const key = s.toLowerCase().replace(/[^a-z0-9 ]/g, "");
-      if (sttJudged.has(key)) continue;
-      sttJudged.add(key);
+    const parts = text.split(/(?<=[.?!])\s+/).map((s) => s.trim()).filter(Boolean);
+    for (let i = 0; i < parts.length; i++) {
+      const s = parts[i];
+      if (s.length <= 8) continue;
+      const isLast = i === parts.length - 1;
+      const complete = /[.?!]$/.test(s);
+      if (isLast && !complete) continue; // the trailing sentence is still being spoken
+      if (_seenBefore(s)) continue; // collapse rolling-window repeats of the same claim
+      judgedTokens.push(_tokens(s));
+      if (judgedTokens.length > 60) judgedTokens.shift();
       judgeLive(s);
     }
   }
 
-  async function transcribeChunk(blob: Blob) {
+  // re-transcribe the trailing WINDOW_S seconds of audio (called every SLIDE_MS)
+  async function transcribeWindow() {
+    if (!capturing || inFlight || Date.now() < backoffUntil) return;
+    if (framesLen < ringRate * 0.7) return; // need a little audio first
+    const want = Math.floor(ringRate * WINDOW_S);
+    const chosen: Float32Array[] = [];
+    let n = 0;
+    for (let i = frames.length - 1; i >= 0 && n < want; i--) {
+      chosen.unshift(frames[i]);
+      n += frames[i].length;
+    }
+    const buf = new Float32Array(n);
+    let o = 0;
+    for (const f of chosen) { buf.set(f, o); o += f.length; }
+    const blob = wavBlob(toPcm16(buf, ringRate));
+
+    inFlight = true;
     try {
       const fd = new FormData();
-      fd.append("audio", blob, "chunk.webm");
+      fd.append("audio", blob, "window.wav");
       const r = await fetch(`${API}/api/transcribe`, { method: "POST", body: fd });
-      const d = await r.json();
-      const text = (d.text || "").trim();
-      if (!text) return;
-      set({ caption: text }); // live transcript shown as it's heard
-      processLiveText(text);
-    } catch {
-      /* ignore a dropped chunk */
-    }
-  }
-
-  function recordChunk(stream: MediaStream) {
-    if (!capturing) return;
-    let rec: MediaRecorder;
-    try {
-      rec = new MediaRecorder(stream, { mimeType: "audio/webm" });
-    } catch {
-      try {
-        rec = new MediaRecorder(stream);
-      } catch {
+      if (r.status === 429) {
+        backoffUntil = Date.now() + 3000; // rate-limited: ease off briefly
         return;
       }
-    }
-    const blobs: Blob[] = [];
-    rec.ondataavailable = (e) => {
-      if (e.data && e.data.size) blobs.push(e.data);
-    };
-    rec.onstop = () => {
-      const blob = new Blob(blobs, { type: rec.mimeType || "audio/webm" });
-      if (blob.size > 2000 && get().playing) transcribeChunk(blob);
-      if (capturing) recordChunk(stream); // next chunk
-    };
-    rec.start();
-    setTimeout(() => {
-      try {
-        if (rec.state !== "inactive") rec.stop();
-      } catch {
-        /* ignore */
+      const d = await r.json();
+      const text = (d.text || "").trim();
+      if (text) {
+        set({ caption: text }); // live, continuously-updating transcript tail
+        processLiveText(text);
       }
-    }, CHUNK_MS);
+    } catch {
+      /* dropped tick */
+    } finally {
+      inFlight = false;
+    }
   }
 
-  function startCapture() {
+  async function startCapture() {
     const v = get().videoEl;
     if (!v || capturing) return;
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      audioCtx.resume();
+      await audioCtx.resume();
+      ringRate = audioCtx.sampleRate;
       if (!srcNode || srcEl !== v) {
         srcNode = audioCtx.createMediaElementSource(v);
         srcEl = v;
-        srcNode.connect(audioCtx.destination); // route to speakers once, so it's audible
+        srcNode.connect(audioCtx.destination); // audible
       }
-      captureDest = audioCtx.createMediaStreamDestination();
-      srcNode.connect(captureDest); // tap a copy for STT
+      if (!workletNode) {
+        await audioCtx.audioWorklet.addModule("/pcm-worklet.js");
+        workletNode = new AudioWorkletNode(audioCtx, "pcm-processor");
+        workletNode.port.onmessage = (e) => {
+          if (!capturing) return;
+          frames.push(e.data as Float32Array);
+          framesLen += (e.data as Float32Array).length;
+          const keep = Math.floor(ringRate * (WINDOW_S + 2));
+          while (framesLen > keep && frames.length > 1) {
+            framesLen -= frames[0].length;
+            frames.shift();
+          }
+        };
+      }
+      srcNode.connect(workletNode); // tap PCM for streaming STT
+      frames = [];
+      framesLen = 0;
       capturing = true;
-      recordChunk(captureDest.stream);
+      if (slideTimer) clearInterval(slideTimer);
+      slideTimer = setInterval(transcribeWindow, SLIDE_MS);
     } catch (e) {
       console.warn("[fc] live capture failed", e);
     }
@@ -239,10 +310,15 @@ export const useFC = create<FCState>((set, get) => {
 
   function stopCapture() {
     capturing = false;
-    if (srcNode && captureDest) {
-      try { srcNode.disconnect(captureDest); } catch { /* ignore */ }
+    if (slideTimer) {
+      clearInterval(slideTimer);
+      slideTimer = null;
     }
-    captureDest = null;
+    if (srcNode && workletNode) {
+      try { srcNode.disconnect(workletNode); } catch { /* ignore */ }
+    }
+    frames = [];
+    framesLen = 0;
   }
 
   function apply(t: number) {
@@ -309,7 +385,7 @@ export const useFC = create<FCState>((set, get) => {
   }
 
   function resetRun() {
-    sttJudged = new Set();
+    judgedTokens = [];
     set({
       t: 0,
       counter: { checked: 0, false: 0, misleading: 0, true: 0 },
@@ -422,7 +498,7 @@ export const useFC = create<FCState>((set, get) => {
       if (videoEl) videoEl.currentTime = clamped;
       if (get().live) {
         // moving the playhead restarts the live transcript from here
-        sttJudged = new Set();
+        judgedTokens = [];
         set({ t: clamped, popups: [], caption: "" });
       } else {
         set({ popups: [] });
