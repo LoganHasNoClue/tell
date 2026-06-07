@@ -38,7 +38,8 @@ Rules:
 class SelfChecker:
     def __init__(self, scenario: str = "self_logan"):
         self.store = FactStore(scenario, index_name=f"tell-{scenario}")
-        self.model = os.getenv("TELL_LLM_MODEL", "openai/gpt-4.1-mini")
+        # fastest available model on the gateway for the general fallback path
+        self.model = os.getenv("TELL_FAST_MODEL", "openai/gpt-4o-mini")
         self._llm = None
         base, key = os.getenv("TELL_LLM_BASE_URL"), os.getenv("TELL_LLM_API_KEY")
         if base and key:
@@ -67,7 +68,7 @@ class SelfChecker:
         try:
             resp = await asyncio.wait_for(
                 self._llm.chat.completions.create(
-                    model=self.model, temperature=0.0, max_tokens=140,
+                    model=self.model, temperature=0.0, max_tokens=70,
                     messages=[{"role": "system", "content": JUDGE_SYSTEM},
                               {"role": "user", "content": user}],
                 ),

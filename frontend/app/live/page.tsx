@@ -11,22 +11,41 @@ const CHIP_FIELDS = ["name", "age", "birthplace", "university", "company"];
 interface LogEntry { id: number; label: string; verdict: "true" | "false"; correction: string; }
 interface Interrupt { label: string; correction: string; }
 
-// conservative fast-path extraction of identity claims (instant buzzer)
+// generic words that aren't real claim values (avoid false buzzes)
+const STOP = new Set([
+  "the", "a", "an", "my", "this", "that", "here", "there", "home", "work",
+  "school", "college", "university", "gym", "store", "place", "company",
+  "startup", "business", "it", "them", "us", "you", "people", "everyone",
+]);
+
+function cleanValue(v: string): string | null {
+  const s = v.trim().replace(/[.?!,]+$/, "");
+  const first = s.split(/\s+/)[0];
+  if (s.length < 2 || STOP.has(s.toLowerCase()) || STOP.has(first.toLowerCase())) return null;
+  return s;
+}
+
+// fast-path extraction of identity claims -> instant (0ms client / ~4ms Moss) buzzer
 function extractClaims(chunk: string): { field: string; value: string }[] {
   const t = " " + chunk.toLowerCase() + " ";
   const out: { field: string; value: string }[] = [];
   let m: RegExpExecArray | null;
   const push = (re: RegExp, field: string) => {
-    while ((m = re.exec(t))) out.push({ field, value: m[1].trim() });
+    while ((m = re.exec(t))) {
+      const v = cleanValue(m[1]);
+      if (v) out.push({ field, value: v });
+    }
   };
-  push(/(?:my name is|name's|name is|call me|i go by|this is)\s+([a-z][a-z'-]{2,20})/g, "name");
+  push(/(?:my name is|name's|name is|call me|i go by|i'm called|this is)\s+([a-z][a-z'-]{1,20})/g, "name");
   push(/\bi(?:'m| am)\s+(\d{1,3})(?:\s*(?:years old|year old|years|yo))?\b/g, "age");
   push(/\bi (?:was born in|grew up in)\s+([a-z][a-z .'-]{2,28})/g, "birthplace");
-  push(/\bi(?:'m| am)?\s*from\s+([a-z][a-z .'-]{2,28})/g, "birthplace");
-  push(/\bi (?:study at|attend|graduated from)\s+([a-z][a-z .'-]{2,38})/g, "university");
+  push(/\bi(?:'m| am)\s+from\s+([a-z][a-z .'-]{2,28})/g, "birthplace");
+  push(/\bi (?:went to|go to|studied at|study at|attend|graduated from|am a student at)\s+([a-z][a-z .'-]{2,38})/g, "university");
   push(/\bmy (?:university|school|college) is\s+([a-z][a-z .'-]{2,38})/g, "university");
-  push(/\bi (?:founded|co-?founded|started a company called)\s+([a-z0-9][a-z0-9 .'-]{1,38})/g, "company");
+  push(/\bi (?:founded|co-?founded|started|built|created|run|own)\s+([a-z0-9][a-z0-9 .'-]{1,38})/g, "company");
+  push(/\bi(?:'m| am)\s+the\s+(?:founder|ceo|co-?founder)\s+of\s+([a-z0-9][a-z0-9 .'-]{1,38})/g, "company");
   push(/\bmy (?:company|startup) is\s+([a-z0-9][a-z0-9 .'-]{1,38})/g, "company");
+  push(/\bi work (?:at|for)\s+([a-z0-9][a-z0-9 .'-]{2,38})/g, "company");
   return out;
 }
 
@@ -56,6 +75,7 @@ export default function LivePage() {
   const lastBuzzRef = useRef(0);
   const logId = useRef(1);
   const interruptTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const judgeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -160,6 +180,13 @@ export default function LivePage() {
       setTranscript((finalRef.current + interimChunk).slice(-360));
       const chunk = `${finalChunk} ${interimChunk}`.trim();
       if (chunk) for (const c of extractClaims(chunk)) processFast(c.field, c.value, chunk); // instant identity path
+      // general judge on interim too (debounced) so non-identity claims don't
+      // wait for the sentence-end pause
+      const interim = interimChunk.trim();
+      if (interim.length > 10) {
+        if (judgeTimer.current) clearTimeout(judgeTimer.current);
+        judgeTimer.current = setTimeout(() => judgeSentence(interim), 280);
+      }
     };
     rec.onend = () => {
       if (recRef.current) { try { rec.start(); } catch { /* ignore */ } }
