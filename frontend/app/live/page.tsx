@@ -66,6 +66,7 @@ export default function LivePage() {
   const [mossPulse, setMossPulse] = useState(0);
   const [facts, setFacts] = useState<Record<string, string>>({});
   const [mossOn, setMossOn] = useState(false);
+  const [level, setLevel] = useState(0); // live mic input level (0..1)
 
   const recRef = useRef<any>(null);
   const buzzerRef = useRef<Buzzer | null>(null);
@@ -76,6 +77,9 @@ export default function LivePage() {
   const logId = useRef(1);
   const interruptTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const judgeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const micStreamRef = useRef<MediaStream | null>(null);
+  const meterCtxRef = useRef<AudioContext | null>(null);
+  const meterRaf = useRef(0);
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -152,16 +156,49 @@ export default function LivePage() {
     }
   }, [fireFalse]);
 
+  // live mic VU meter (separate stream) so the user can SEE it's hearing them
+  const setupMeter = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
+      micStreamRef.current = stream;
+      const AC = (window as any).AudioContext || (window as any).webkitAudioContext;
+      const ctx: AudioContext = new AC();
+      meterCtxRef.current = ctx;
+      const src = ctx.createMediaStreamSource(stream);
+      const an = ctx.createAnalyser();
+      an.fftSize = 512;
+      src.connect(an);
+      const data = new Uint8Array(an.fftSize);
+      const tick = () => {
+        an.getByteTimeDomainData(data);
+        let sum = 0;
+        for (let i = 0; i < data.length; i++) {
+          const v = (data[i] - 128) / 128;
+          sum += v * v;
+        }
+        setLevel(Math.min(1, Math.sqrt(sum / data.length) * 4));
+        meterRaf.current = requestAnimationFrame(tick);
+      };
+      tick();
+    } catch {
+      /* meter is optional — recognition still runs */
+    }
+  }, []);
+
   const start = useCallback(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) { setSupported(false); return; }
     buzzerRef.current = buzzerRef.current || new Buzzer();
     buzzerRef.current.init();
+    setupMeter();
 
     const rec = new SR();
     rec.continuous = true;
     rec.interimResults = true;
     rec.lang = "en-US";
+    rec.maxAlternatives = 1;
     finalRef.current = "";
     judgedRef.current = new Set();
 
@@ -188,8 +225,30 @@ export default function LivePage() {
         judgeTimer.current = setTimeout(() => judgeSentence(interim), 280);
       }
     };
+    rec.onerror = (e: any) => {
+      // permission errors are fatal; everything else (no-speech, network,
+      // audio-capture, aborted) recovers via the onend restart below.
+      if (e?.error === "not-allowed" || e?.error === "service-not-allowed") {
+        recRef.current = null;
+        setListening(false);
+      }
+    };
     rec.onend = () => {
-      if (recRef.current) { try { rec.start(); } catch { /* ignore */ } }
+      // Chrome ends recognition periodically (and after silence). Restart it
+      // immediately so it never stops hearing you mid-session.
+      if (recRef.current) {
+        try {
+          rec.start();
+        } catch {
+          setTimeout(() => {
+            try {
+              if (recRef.current) rec.start();
+            } catch {
+              /* ignore */
+            }
+          }, 200);
+        }
+      }
     };
 
     recRef.current = rec;
@@ -198,12 +257,19 @@ export default function LivePage() {
     setTranscript("");
     setLog([]);
     setCatches(0);
-  }, [processFast, judgeSentence]);
+  }, [processFast, judgeSentence, setupMeter]);
 
   const stop = useCallback(() => {
     const rec = recRef.current;
     recRef.current = null;
     if (rec) { try { rec.stop(); } catch { /* ignore */ } }
+    // teardown the VU meter
+    if (meterRaf.current) cancelAnimationFrame(meterRaf.current);
+    micStreamRef.current?.getTracks().forEach((t) => t.stop());
+    micStreamRef.current = null;
+    meterCtxRef.current?.close().catch(() => {});
+    meterCtxRef.current = null;
+    setLevel(0);
     setListening(false);
     setInterrupt(null);
   }, []);
@@ -259,6 +325,23 @@ export default function LivePage() {
               <span className="text-[12px] font-semibold tracking-[0.2em] text-white/70">LISTENING</span>
               <span key={mossPulse} className="glass rounded-full px-2.5 py-1 text-[10px] tracking-wide text-[var(--green)]">⟳ Moss retrieving</span>
             </div>
+
+            {/* live mic VU meter — visible feedback that it's hearing you */}
+            <div className="flex w-72 items-center gap-2.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2">
+                <rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0 0 14 0M12 17v4" />
+              </svg>
+              <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-75"
+                  style={{ width: `${Math.round(level * 100)}%`, backgroundColor: level > 0.05 ? "var(--green)" : "rgba(255,255,255,0.3)" }}
+                />
+              </div>
+              <span className="w-24 text-[10px] tracking-wide" style={{ color: level > 0.04 ? "var(--green)" : "rgba(255,255,255,0.35)" }}>
+                {level > 0.04 ? "hearing you" : "silent…"}
+              </span>
+            </div>
+
             <div className="min-h-[120px] w-full max-w-2xl text-center">
               <p className="text-[26px] font-medium leading-snug text-white/90">
                 {transcript || <span className="text-white/30">…</span>}
