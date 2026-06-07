@@ -27,7 +27,7 @@ backend/factcheck/cache/
 *.mkv
 
 # ---- local tooling / os ----
-.claude/settings.local.json
+.claude/
 .DS_Store
 *.log
 
