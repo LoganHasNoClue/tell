@@ -112,7 +112,14 @@ async def _get_self():
 @app.get("/api/selffacts")
 async def api_selffacts():
     sc = await _get_self()
-    return {"fields": sc.fields, "using_moss": sc.store.using_moss}
+    return {"fields": sc.fields, "facts": sc.all_facts, "using_moss": sc.store.using_moss}
+
+
+@app.post("/api/roast")
+async def api_roast(payload: dict = Body(...)):
+    """A short, cocky one-liner about a false claim (spoken by the voice agent)."""
+    sc = await _get_self()
+    return await sc.roast(payload.get("claim", ""), payload.get("correction", ""))
 
 
 @app.post("/api/selfcheck")

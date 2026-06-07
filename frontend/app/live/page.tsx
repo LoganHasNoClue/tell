@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Buzzer } from "@/lib/buzzer";
 
 const API = process.env.NEXT_PUBLIC_TELL_API || "http://localhost:8000";
-const CHIP_FIELDS = ["name", "age", "birthplace", "university", "company"];
 
 interface LogEntry { id: number; label: string; verdict: "true" | "false"; correction: string; }
 interface Interrupt { label: string; correction: string; }
@@ -65,8 +64,11 @@ export default function LivePage() {
   const [catches, setCatches] = useState(0);
   const [mossPulse, setMossPulse] = useState(0);
   const [facts, setFacts] = useState<Record<string, string>>({});
+  const [allFacts, setAllFacts] = useState<{ field?: string; value?: string; text: string; topic?: string }[]>([]);
+  const [factsOpen, setFactsOpen] = useState(false);
   const [mossOn, setMossOn] = useState(false);
   const [level, setLevel] = useState(0); // live mic input level (0..1)
+  const [roast, setRoast] = useState(false); // voice-agent roast mode
 
   const recRef = useRef<any>(null);
   const buzzerRef = useRef<Buzzer | null>(null);
@@ -80,6 +82,10 @@ export default function LivePage() {
   const micStreamRef = useRef<MediaStream | null>(null);
   const meterCtxRef = useRef<AudioContext | null>(null);
   const meterRaf = useRef(0);
+  const roastRef = useRef(false);
+  const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
+  const lastResultRef = useRef(0);
+  const watchdogRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -90,21 +96,67 @@ export default function LivePage() {
         const map: Record<string, string> = {};
         (d.fields || []).forEach((f: any) => f.field && (map[f.field] = f.value));
         setFacts(map);
+        setAllFacts(d.facts || []);
         setMossOn(!!d.using_moss);
       })
       .catch(() => {});
+    // preload TTS voices for the roast agent
+    const loadVoices = () => { voicesRef.current = window.speechSynthesis?.getVoices() || []; };
+    loadVoices();
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
   }, []);
+
+  useEffect(() => { roastRef.current = roast; }, [roast]);
+
+  const speak = useCallback((text: string) => {
+    try {
+      const synth = window.speechSynthesis;
+      if (!synth) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 1.08;
+      u.pitch = 1.0;
+      u.volume = 1.0;
+      const vs = voicesRef.current.length ? voicesRef.current : synth.getVoices();
+      const pick =
+        vs.find((v) => /daniel/i.test(v.name)) ||
+        vs.find((v) => /google uk english male|google us english/i.test(v.name)) ||
+        vs.find((v) => /samantha|alex|aaron/i.test(v.name)) ||
+        vs.find((v) => v.lang?.startsWith("en"));
+      if (pick) u.voice = pick;
+      synth.cancel();
+      synth.speak(u);
+    } catch {
+      /* TTS optional */
+    }
+  }, []);
+
+  const doRoast = useCallback(async (claim: string, correction: string) => {
+    try {
+      const r = await fetch(`${API}/api/roast`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ claim, correction }),
+      });
+      const d = await r.json();
+      if (d.line) speak(d.line);
+    } catch {
+      speak("yeah, that's not true. nice try.");
+    }
+  }, [speak]);
 
   const fireFalse = useCallback((correction: string, label: string) => {
     if (Date.now() - lastBuzzRef.current < 1800) return; // dedup across paths
     lastBuzzRef.current = Date.now();
     buzzerRef.current?.play();
+    if (roastRef.current) doRoast(label, correction); // voice agent talks back
     setInterrupt({ label, correction });
     setCatches((c) => c + 1);
     setLog((l) => [{ id: logId.current++, label, verdict: "false" as const, correction }, ...l].slice(0, 30));
     if (interruptTimer.current) clearTimeout(interruptTimer.current);
     interruptTimer.current = setTimeout(() => setInterrupt(null), 2600);
-  }, []);
+  }, [doRoast]);
 
   // INSTANT path: identity field mismatch (client-cached facts) + Moss confirm
   const processFast = useCallback(
@@ -203,6 +255,7 @@ export default function LivePage() {
     judgedRef.current = new Set();
 
     rec.onresult = (e: any) => {
+      lastResultRef.current = Date.now();
       let finalChunk = "";
       let interimChunk = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -253,6 +306,15 @@ export default function LivePage() {
 
     recRef.current = rec;
     rec.start();
+    lastResultRef.current = Date.now();
+    // backstop watchdog: if recognition silently dies (no results for a while),
+    // restart it. start() throws harmlessly if it's actually still running.
+    if (watchdogRef.current) clearInterval(watchdogRef.current);
+    watchdogRef.current = setInterval(() => {
+      if (recRef.current && Date.now() - lastResultRef.current > 8000) {
+        try { recRef.current.start(); } catch { /* already running */ }
+      }
+    }, 4000);
     setListening(true);
     setTranscript("");
     setLog([]);
@@ -263,6 +325,8 @@ export default function LivePage() {
     const rec = recRef.current;
     recRef.current = null;
     if (rec) { try { rec.stop(); } catch { /* ignore */ } }
+    if (watchdogRef.current) clearInterval(watchdogRef.current);
+    try { window.speechSynthesis?.cancel(); } catch { /* ignore */ }
     // teardown the VU meter
     if (meterRaf.current) cancelAnimationFrame(meterRaf.current);
     micStreamRef.current?.getTracks().forEach((t) => t.stop());
@@ -276,8 +340,6 @@ export default function LivePage() {
 
   useEffect(() => () => stop(), [stop]);
 
-  const chips = CHIP_FIELDS.filter((f) => facts[f]);
-
   return (
     <main className="vignette relative flex h-screen flex-col items-center px-6 py-6">
       <header className="flex w-full max-w-3xl items-center justify-between">
@@ -285,20 +347,66 @@ export default function LivePage() {
           <Link href="/" className="text-[20px] font-bold tracking-[0.18em] text-white">TELL</Link>
           <span className="text-[12px] tracking-[0.2em] text-white/45">TRUTH MIC</span>
         </div>
-        <span className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: mossOn ? "var(--green)" : "rgba(255,255,255,0.4)" }} />
-          <span className="text-[10px] font-medium tracking-[0.16em] text-white/60">{mossOn ? "MOSS LIVE" : "MOSS (local)"}</span>
-        </span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setRoast((r) => !r)}
+            className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1 transition active:scale-95"
+            title="Roast mode: a voice agent talks back with attitude when you lie"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={roast ? "var(--amber)" : "rgba(255,255,255,0.5)"} strokeWidth="2">
+              <path d="M11 5 6 9H2v6h4l5 4V5z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M19 5a9 9 0 0 1 0 14" />
+            </svg>
+            <span className="text-[10px] font-semibold tracking-[0.16em]" style={{ color: roast ? "var(--amber)" : "rgba(255,255,255,0.6)" }}>
+              ROAST {roast ? "ON" : "OFF"}
+            </span>
+          </button>
+          <span className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1">
+            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: mossOn ? "var(--green)" : "rgba(255,255,255,0.4)" }} />
+            <span className="text-[10px] font-medium tracking-[0.16em] text-white/60">{mossOn ? "MOSS LIVE" : "MOSS (local)"}</span>
+          </span>
+        </div>
       </header>
 
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-        <span className="text-[11px] tracking-[0.18em] text-white/40">KNOWS</span>
-        {chips.map((f) => (
-          <span key={f} className="glass rounded-full px-3 py-1 text-[12px] text-white/75">
-            {f}: <span className="text-white">{facts[f]}</span>
-          </span>
-        ))}
-        <span className="glass rounded-full px-3 py-1 text-[12px] text-white/45">+ {Math.max(0, Object.keys(facts).length - chips.length)} more facts</span>
+      <div className="relative mt-6 flex justify-center">
+        <div className="relative">
+          <button
+            onClick={() => setFactsOpen((o) => !o)}
+            className="glass flex items-center gap-2 rounded-full px-4 py-1.5 transition active:scale-95"
+          >
+            <span className="text-[11px] tracking-[0.18em] text-white/45">KNOWS</span>
+            <span className="text-[12px] text-white/85">{allFacts.length} facts about you</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2"
+              style={{ transform: factsOpen ? "rotate(180deg)" : "none", transition: "transform 150ms" }}>
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <AnimatePresence>
+            {factsOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                className="glass-strong absolute left-1/2 z-30 mt-2 max-h-[52vh] w-[min(90vw,640px)] -translate-x-1/2 overflow-y-auto rounded-2xl p-2"
+              >
+                {allFacts.map((f, i) => (
+                  <div key={i} className="flex gap-3 border-b border-white/[0.05] px-3 py-2 text-[13px] last:border-0">
+                    {f.field ? (
+                      <>
+                        <span className="w-28 shrink-0 text-white/45">{f.field}</span>
+                        <span className="text-white">{f.value}</span>
+                      </>
+                    ) : (
+                      <span className="leading-snug text-white/80">{f.text}</span>
+                    )}
+                  </div>
+                ))}
+                {allFacts.length === 0 && (
+                  <div className="px-3 py-3 text-[12px] text-white/40">connect backend to load facts…</div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-8">

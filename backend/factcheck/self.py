@@ -17,6 +17,11 @@ from .moss_store import FactStore
 
 JUDGE_TIMEOUT = float(os.getenv("TELL_SELFJUDGE_TIMEOUT", "5"))
 
+ROAST_SYSTEM = """You are TELL's savage sidekick. Someone just said something FALSE about themselves
+and got buzzed. Fire back ONE short line (max 14 words) that is cocky, sarcastic, and jokingly rude —
+roast them for the lie. You can be a little crude and casual (lmao, bro, nice try, sure buddy) but keep
+it funny, not genuinely cruel. Second or third person. No quotes, no emojis, just the line."""
+
 JUDGE_SYSTEM = """You are TELL, a real-time self-fact-checker. Someone is speaking ABOUT THEMSELVES.
 You are given their spoken statement and VERIFIED REFERENCE FACTS about that exact person.
 Decide whether the statement is false.
@@ -100,6 +105,42 @@ class SelfChecker:
             {"field": f["metadata"].get("field"), "value": f["metadata"].get("value")}
             for f in self.store.facts
         ]
+
+    @property
+    def all_facts(self) -> list[dict]:
+        return [
+            {
+                "field": f["metadata"].get("field"),
+                "value": f["metadata"].get("value"),
+                "text": f["text"],
+                "topic": f["metadata"].get("topic"),
+            }
+            for f in self.store.facts
+        ]
+
+    async def roast(self, claim: str, correction: str) -> dict:
+        """One short, cocky, jokingly-rude line about the false claim (for TTS)."""
+        fallback = "yeah, that's not true. nice try, champ."
+        if not self._llm:
+            return {"line": fallback}
+        user = (
+            f'They just falsely claimed: "{claim}". The actual truth: {correction or "the opposite"}. '
+            "Roast them for it in ONE short line."
+        )
+        try:
+            resp = await asyncio.wait_for(
+                self._llm.chat.completions.create(
+                    model=self.model, temperature=0.9, max_tokens=40,
+                    messages=[{"role": "system", "content": ROAST_SYSTEM},
+                              {"role": "user", "content": user}],
+                ),
+                timeout=5,
+            )
+            line = (resp.choices[0].message.content or fallback).strip().strip('"').strip()
+            return {"line": line or fallback}
+        except Exception as e:
+            print(f"[roast] {e}")
+            return {"line": fallback}
 
     async def check(self, field: str, value: str, text: str = "") -> dict:
         value = (value or "").strip()
