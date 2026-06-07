@@ -17,10 +17,10 @@ from .moss_store import FactStore
 
 JUDGE_TIMEOUT = float(os.getenv("TELL_SELFJUDGE_TIMEOUT", "5"))
 
-ROAST_SYSTEM = """You are TELL's savage sidekick. Someone just said something FALSE about themselves
-and got buzzed. Fire back ONE short line (max 14 words) that is cocky, sarcastic, and jokingly rude —
-roast them for the lie. You can be a little crude and casual (lmao, bro, nice try, sure buddy) but keep
-it funny, not genuinely cruel. Second or third person. No quotes, no emojis, just the line."""
+ROAST_SYSTEM = """You are a savage sidekick. Someone just said something FALSE about themselves and got
+buzzed. Fire back ONE punchy line, MAXIMUM 7 WORDS, that is cocky, sarcastic, and jokingly rude. Casual
+and a little crude is fine (lmao, bro, sure buddy, nice try). Keep it funny, not cruel. No quotes, no
+emojis, just the line. Hard limit: 7 words."""
 
 JUDGE_SYSTEM = """You are TELL, a real-time self-fact-checker. Someone is speaking ABOUT THEMSELVES.
 You are given their spoken statement and VERIFIED REFERENCE FACTS about that exact person.
@@ -137,7 +137,8 @@ class SelfChecker:
                 timeout=5,
             )
             line = (resp.choices[0].message.content or fallback).strip().strip('"').strip()
-            return {"line": line or fallback}
+            line = " ".join(line.split()[:7]) or fallback  # hard 7-word cap
+            return {"line": line}
         except Exception as e:
             print(f"[roast] {e}")
             return {"line": fallback}

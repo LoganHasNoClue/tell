@@ -140,9 +140,14 @@ export default function LivePage() {
         body: JSON.stringify({ claim, correction }),
       });
       const d = await r.json();
-      if (d.line) speak(d.line);
+      if (d.audio_b64) {
+        const a = new Audio("data:audio/mpeg;base64," + d.audio_b64); // ElevenLabs voice
+        a.play().catch(() => { if (d.line) speak(d.line); });
+      } else if (d.line) {
+        speak(d.line); // fallback: browser voice
+      }
     } catch {
-      speak("yeah, that's not true. nice try.");
+      speak("nice try, champ.");
     }
   }, [speak]);
 
@@ -345,7 +350,7 @@ export default function LivePage() {
       <header className="flex w-full max-w-3xl items-center justify-between">
         <div className="flex items-baseline gap-3">
           <Link href="/" className="text-[20px] font-bold tracking-[0.18em] text-white">TELL</Link>
-          <span className="text-[12px] tracking-[0.2em] text-white/45">TRUTH MIC</span>
+          <span className="text-[12px] tracking-[0.2em] text-white/45">MIC</span>
         </div>
         <div className="flex items-center gap-2">
           <button

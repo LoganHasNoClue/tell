@@ -4,7 +4,6 @@ import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useFC } from "@/lib/fc";
 import FCStage from "@/components/fc/FCStage";
-import VerdictStack from "@/components/fc/VerdictStack";
 import CounterCard from "@/components/fc/CounterCard";
 import VerdictFeed from "@/components/fc/VerdictFeed";
 import FCTransport from "@/components/fc/FCTransport";
@@ -60,7 +59,7 @@ function Page() {
               <path d="M5 10a7 7 0 0 0 14 0M12 17v4" />
             </svg>
             <span className="text-[10px] font-semibold tracking-[0.16em] text-white/70">
-              TRUTH MIC
+              MIC
             </span>
           </a>
           <button
@@ -85,7 +84,6 @@ function Page() {
         <div className="flex min-h-0 flex-col gap-4">
           <div className="relative">
             <FCStage />
-            <VerdictStack />
           </div>
           <FCTransport />
         </div>

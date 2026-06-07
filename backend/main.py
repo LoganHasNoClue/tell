@@ -118,11 +118,39 @@ async def api_selffacts():
     return {"fields": sc.fields, "facts": sc.all_facts, "using_moss": sc.store.using_moss}
 
 
+async def _eleven_tts(text: str) -> str | None:
+    """Synthesize a line with ElevenLabs -> base64 mp3. None if no key / failure."""
+    key = os.getenv("ELEVENLABS_API_KEY")
+    if not key or not text:
+        return None
+    voice = os.getenv("ELEVENLABS_VOICE_ID", "pNInz6obpgDQGcFmaJgB")  # Adam (cocky male)
+    try:
+        import base64
+        import httpx
+
+        async with httpx.AsyncClient(timeout=10) as c:
+            r = await c.post(
+                f"https://api.elevenlabs.io/v1/text-to-speech/{voice}",
+                params={"output_format": "mp3_44100_128"},
+                headers={"xi-api-key": key, "content-type": "application/json"},
+                json={"text": text, "model_id": "eleven_flash_v2_5"},
+            )
+            if r.status_code != 200:
+                print(f"[eleven] {r.status_code}: {r.text[:120]}")
+                return None
+            return base64.b64encode(r.content).decode()
+    except Exception as e:
+        print(f"[eleven] {e}")
+        return None
+
+
 @app.post("/api/roast")
 async def api_roast(payload: dict = Body(...)):
-    """A short, cocky one-liner about a false claim (spoken by the voice agent)."""
+    """A short, cocky one-liner about a false claim, voiced by ElevenLabs if keyed."""
     sc = await _get_self()
-    return await sc.roast(payload.get("claim", ""), payload.get("correction", ""))
+    out = await sc.roast(payload.get("claim", ""), payload.get("correction", ""))
+    out["audio_b64"] = await _eleven_tts(out.get("line", ""))
+    return out
 
 
 # ---- Live transcription of the playing video's audio (real STT, no precompute) ----
