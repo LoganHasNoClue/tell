@@ -1,0 +1,38 @@
+# ---- secrets ----
+.env
+.env.local
+*.local
+
+# ---- node / next ----
+node_modules/
+.pnpm-store/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+
+# ---- python ----
+backend/.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ---- generated / cache ----
+backend/factcheck/cache/
+
+# ---- media: large + third-party copyright (CNN/WSJ/Fed footage) ----
+# the pipeline drops a synthetic broadcast tile when no mp4 is present
+*.mp4
+*.wav
+*.m4a
+*.mkv
+
+# ---- local tooling / os ----
+.claude/settings.local.json
+.DS_Store
+*.log
+
+# ---- internal strategy docs (not for the public repo) ----
+00_BUILD_PROMPT.md
+01_ARCHITECTURE.md
+02_DESIGN_SPEC.md
+files/

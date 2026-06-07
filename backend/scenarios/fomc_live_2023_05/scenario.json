@@ -1,0 +1,26 @@
+{
+  "id": "fomc_live_2023_05",
+  "mode": "fed",
+  "title": "FOMC Press Conference",
+  "subtitle": "Chair Powell \u2014 opening statement (May 2023)",
+  "tag": "FED MODE",
+  "video": "/scenarios/fomc_live_2023_05/event.mp4",
+  "outcome_label": "Fed cuts rates this year",
+  "hero_label": "P(CUT)",
+  "rubric_id": "fed_v1",
+  "duration": 200.03,
+  "market_csv": "/scenarios/fomc_live_2023_05/market_odds.csv",
+  "precomputed_run": "/scenarios/fomc_live_2023_05/run.json",
+  "captions": "/scenarios/fomc_live_2023_05/captions.json",
+  "submeters": [
+    "hawk_dove",
+    "hedging"
+  ],
+  "lead_level": 0.6,
+  "source_label": "FOMC Press Conference (real clip \u00b7 whisper STT)",
+  "model_label": "MiniMax M3 \u00b7 via Truefoundry gateway",
+  "video_offset": 0.0,
+  "lead_time_s": null,
+  "market_placeholder": true,
+  "scored_live": true
+}

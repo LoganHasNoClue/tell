@@ -1,0 +1,26 @@
+{
+  "id": "debate_biden_2024",
+  "mode": "debate",
+  "title": "Presidential Debate",
+  "subtitle": "Biden vs. Trump \u2014 June 27, 2024 (CNN)",
+  "tag": "DEBATE MODE",
+  "video": "/scenarios/debate_biden_2024/event.mp4",
+  "outcome_label": "Joe Biden remains the 2024 Democratic nominee",
+  "hero_label": "P(NOM)",
+  "rubric_id": "debate_v1",
+  "duration": 720.02,
+  "market_csv": "/scenarios/debate_biden_2024/market_odds.csv",
+  "precomputed_run": "/scenarios/debate_biden_2024/run.json",
+  "captions": "/scenarios/debate_biden_2024/captions.json",
+  "submeters": [
+    "momentum",
+    "dodge"
+  ],
+  "lead_level": 0.6,
+  "source_label": "Presidential Debate (real clip \u00b7 whisper STT)",
+  "model_label": "MiniMax M3 \u00b7 via Truefoundry gateway",
+  "video_offset": 0.0,
+  "lead_time_s": null,
+  "market_placeholder": false,
+  "scored_live": true
+}

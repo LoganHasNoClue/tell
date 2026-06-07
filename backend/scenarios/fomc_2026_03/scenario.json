@@ -1,0 +1,23 @@
+{
+  "id": "fomc_2026_03",
+  "mode": "fed",
+  "title": "FOMC Press Conference",
+  "subtitle": "Chair Powell \u2014 opening remarks & Q&A",
+  "tag": "FED MODE",
+  "video": "/scenarios/fomc_2026_03/event.mp4",
+  "outcome_label": "Fed cuts at this meeting",
+  "hero_label": "P(CUT)",
+  "rubric_id": "fed_v1",
+  "duration": 120,
+  "market_csv": "/scenarios/fomc_2026_03/market_odds.csv",
+  "precomputed_run": "/scenarios/fomc_2026_03/run.json",
+  "captions": "/scenarios/fomc_2026_03/captions.json",
+  "submeters": [
+    "hawk_dove",
+    "hedging"
+  ],
+  "lead_time_s": 23.0,
+  "lead_level": 0.68,
+  "source_label": "FOMC press conference (replay)",
+  "model_label": "MiniMax M3 \u00b7 via Truefoundry gateway"
+}

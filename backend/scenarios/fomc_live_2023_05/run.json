@@ -1,0 +1,707 @@
+[
+  {
+    "t": 0.0,
+    "our_prob": 0.3,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.5,
+      "momentum": null
+    }
+  },
+  {
+    "t": 4.0,
+    "our_prob": 0.3,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.5,
+      "momentum": null
+    }
+  },
+  {
+    "t": 8.0,
+    "our_prob": 0.28,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "data-dependent approach",
+        "effect": -0.02,
+        "why": "hedging lowers certainty of a cut"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 12.0,
+    "our_prob": 0.28,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 16.0,
+    "our_prob": 0.28,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0.0,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 20.0,
+    "our_prob": 0.25,
+    "delta": -0.03,
+    "drivers": [
+      {
+        "quote": "data-dependent approach",
+        "effect": -0.05,
+        "why": "signals caution, less commitment to cutting rates"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.2,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 24.0,
+    "our_prob": 0.22,
+    "delta": -0.03,
+    "drivers": [
+      {
+        "quote": "data-dependent approach",
+        "effect": -0.03,
+        "why": "Hedging lowers confidence in cutting rates this year"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 28.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 32.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.9,
+      "momentum": null
+    }
+  },
+  {
+    "t": 36.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.9,
+      "momentum": null
+    }
+  },
+  {
+    "t": 40.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 44.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 48.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.2,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 52.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 56.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 60.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 64.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 68.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0.2,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 72.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0.2,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 76.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 80.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 84.0,
+    "our_prob": 0.25,
+    "delta": 0.03,
+    "drivers": [
+      {
+        "quote": "some signs that supply and demand in the labor market are coming back into better balance",
+        "effect": 0.05,
+        "why": "suggests easing labor market, raising cut chances"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": 0.2,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 88.0,
+    "our_prob": 0.25,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 92.0,
+    "our_prob": 0.25,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 96.0,
+    "our_prob": 0.25,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 100.0,
+    "our_prob": 0.22,
+    "delta": -0.03,
+    "drivers": [
+      {
+        "quote": "Inflation remains well above our longer-run goal of 2%",
+        "effect": -0.03,
+        "why": "High inflation suggests less likelihood of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 104.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.1,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 108.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0.2,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 112.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0.3,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 116.0,
+    "our_prob": 0.22,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": 0.3,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 120.0,
+    "our_prob": 0.2,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "Inflation remains well above our longer-run goal of 2%",
+        "effect": -0.05,
+        "why": "High inflation reduces likelihood of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 124.0,
+    "our_prob": 0.18,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.02,
+        "why": "high inflation pressures reduce chance of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 128.0,
+    "our_prob": 0.16,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.04,
+        "why": "high inflation pressure lowers chance of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 132.0,
+    "our_prob": 0.15,
+    "delta": -0.01,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.05,
+        "why": "high inflation pressures reduce likelihood of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 136.0,
+    "our_prob": 0.14,
+    "delta": -0.01,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.01,
+        "why": "high inflation pressure lowers chance of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 140.0,
+    "our_prob": 0.12,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.03,
+        "why": "high inflation pressure lowers chance of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 144.0,
+    "our_prob": 0.1,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.05,
+        "why": "high inflation pressures reduce chance of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 148.0,
+    "our_prob": 0.08,
+    "delta": -0.02,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.05,
+        "why": "high inflation pressures reduce likelihood of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.6,
+      "momentum": null
+    }
+  },
+  {
+    "t": 152.0,
+    "our_prob": 0.07,
+    "delta": -0.01,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.01,
+        "why": "high inflation pressure lowers chance of rate cuts"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 156.0,
+    "our_prob": 0.065,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "inflation pressures continue to run high",
+        "effect": -0.01,
+        "why": "high inflation lowers chance of rate cuts this year"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.8,
+      "momentum": null
+    }
+  },
+  {
+    "t": 160.0,
+    "our_prob": 0.06,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "inflation imposes significant hardship",
+        "effect": -0.01,
+        "why": "emphasis on inflation hardship suggests hawkish stance"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 164.0,
+    "our_prob": 0.06,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.3,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 168.0,
+    "our_prob": 0.06,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.3,
+      "hedging": 0.7,
+      "momentum": null
+    }
+  },
+  {
+    "t": 172.0,
+    "our_prob": 0.055,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "we are strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "commitment to fighting inflation lowers cut probability"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 176.0,
+    "our_prob": 0.05,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "we are strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "strong commitment to fighting inflation lowers cut chances"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 180.0,
+    "our_prob": 0.04,
+    "delta": -0.01,
+    "drivers": [
+      {
+        "quote": "we are strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "commitment to fight inflation lowers cut chances"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.8,
+      "hedging": 0.2,
+      "momentum": null
+    }
+  },
+  {
+    "t": 184.0,
+    "our_prob": 0.035,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "emphasis on fighting inflation lowers cut probability"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.8,
+      "hedging": 0.2,
+      "momentum": null
+    }
+  },
+  {
+    "t": 188.0,
+    "our_prob": 0.03,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "strongly committed to returning inflation to our 2% objective",
+        "effect": -0.02,
+        "why": "commitment to fighting inflation lowers cut chances"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.8,
+      "hedging": 0.2,
+      "momentum": null
+    }
+  },
+  {
+    "t": 192.0,
+    "our_prob": 0.025,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "emphasis on fighting inflation lowers cut chances"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.8,
+      "hedging": 0.2,
+      "momentum": null
+    }
+  },
+  {
+    "t": 196.0,
+    "our_prob": 0.02,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "we are strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "strong commitment to fighting inflation lowers cut chances"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.8,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 200.0,
+    "our_prob": 0.015,
+    "delta": -0.005,
+    "drivers": [
+      {
+        "quote": "strongly committed to returning inflation to our 2% objective",
+        "effect": -0.01,
+        "why": "emphasis on fighting inflation lowers cut probability"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.7,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  }
+]

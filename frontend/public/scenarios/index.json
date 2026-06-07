@@ -1,0 +1,46 @@
+[
+  {
+    "id": "fomc_2026_03",
+    "mode": "fed",
+    "title": "FOMC Press Conference",
+    "subtitle": "Chair Powell \u2014 opening remarks & Q&A",
+    "tag": "FED MODE",
+    "outcome_label": "Fed cuts at this meeting",
+    "hero_label": "P(CUT)",
+    "duration": 120,
+    "lead_time_s": 23.0
+  },
+  {
+    "id": "debate_2026_primary",
+    "mode": "debate",
+    "title": "Primary Debate \u2014 Night One",
+    "subtitle": "Sen. Hool vs. the field \u2014 live exchange",
+    "tag": "DEBATE MODE",
+    "outcome_label": "Hool wins the nomination",
+    "hero_label": "P(WIN)",
+    "duration": 115,
+    "lead_time_s": 21.5
+  },
+  {
+    "id": "fomc_live_2023_05",
+    "mode": "fed",
+    "title": "FOMC Press Conference",
+    "subtitle": "Chair Powell \u2014 opening statement (May 2023)",
+    "tag": "FED MODE",
+    "outcome_label": "Fed cuts rates this year",
+    "hero_label": "P(CUT)",
+    "duration": 200.03,
+    "lead_time_s": null
+  },
+  {
+    "id": "debate_biden_2024",
+    "mode": "debate",
+    "title": "Presidential Debate",
+    "subtitle": "Biden vs. Trump \u2014 June 27, 2024 (CNN)",
+    "tag": "DEBATE MODE",
+    "outcome_label": "Joe Biden remains the 2024 Democratic nominee",
+    "hero_label": "P(NOM)",
+    "duration": 720.02,
+    "lead_time_s": null
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "id": "debate_2026_primary",
+  "mode": "debate",
+  "title": "Primary Debate \u2014 Night One",
+  "subtitle": "Sen. Hool vs. the field \u2014 live exchange",
+  "tag": "DEBATE MODE",
+  "video": "/scenarios/debate_2026_primary/event.mp4",
+  "outcome_label": "Hool wins the nomination",
+  "hero_label": "P(WIN)",
+  "rubric_id": "debate_v1",
+  "duration": 115,
+  "market_csv": "/scenarios/debate_2026_primary/market_odds.csv",
+  "precomputed_run": "/scenarios/debate_2026_primary/run.json",
+  "captions": "/scenarios/debate_2026_primary/captions.json",
+  "submeters": [
+    "momentum",
+    "dodge"
+  ],
+  "lead_time_s": 21.5,
+  "lead_level": 0.55,
+  "source_label": "Primary debate broadcast (replay)",
+  "model_label": "MiniMax M3 \u00b7 via Truefoundry gateway"
+}

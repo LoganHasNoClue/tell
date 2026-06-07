@@ -1,0 +1,96 @@
+{
+  "scenario": "debate_biden_2024",
+  "description": "Ground-truth fact base for fact-checking the June 27, 2024 Biden–Trump debate. Each fact is a verified statement with a source; the retrieval layer (Moss) surfaces the most relevant facts for each spoken claim, and the LLM judges the claim against them.",
+  "facts": [
+    {
+      "id": "unemployment_peak_2020",
+      "text": "U.S. unemployment peaked at 14.7% in April 2020 during the COVID-19 pandemic — the highest rate in the history of the series (since 1948). It was not 15%, though 14.7% rounds close.",
+      "metadata": {"topic": "unemployment", "source": "U.S. Bureau of Labor Statistics", "source_url": "https://www.bls.gov/opub/ted/2020/unemployment-rate-rises-to-record-high-14-point-7-percent-in-april-2020.htm"}
+    },
+    {
+      "id": "biden_jobs_total",
+      "text": "Under President Biden the U.S. economy added roughly 15–16 million jobs from January 2021 through 2024 (about 12.6 million by March 2023). The figure is in the millions, not thousands.",
+      "metadata": {"topic": "jobs", "source": "BLS / FactCheck.org", "source_url": "https://www.factcheck.org/2025/10/bidens-final-numbers/"}
+    },
+    {
+      "id": "trump_net_jobs",
+      "text": "The economy lost a net 2.7 million jobs over Donald Trump's full term (2017–2021), driven by the COVID-19 collapse. Trump is the only president since Herbert Hoover to leave office with fewer jobs than when he started.",
+      "metadata": {"topic": "jobs", "source": "BLS / FactCheck.org 'Trump's Final Numbers'", "source_url": "https://www.factcheck.org/2021/10/trumps-final-numbers/"}
+    },
+    {
+      "id": "manufacturing_jobs",
+      "text": "Manufacturing employment fell by about 182,000 (−1.4%) over Trump's term. Under Biden, manufacturing jobs rebounded by roughly 700,000–800,000 from January 2021 to 2024.",
+      "metadata": {"topic": "manufacturing", "source": "U.S. Bureau of Labor Statistics", "source_url": "https://www.bls.gov/"}
+    },
+    {
+      "id": "tcja_size",
+      "text": "The 2017 Tax Cuts and Jobs Act was projected to cut taxes by about $1.5 trillion over ten years (Joint Committee on Taxation). Measured as a share of GDP it was NOT the largest tax cut in U.S. history — Reagan's 1981 cut was larger. Claims of '$2 trillion' and 'largest in history' are overstated.",
+      "metadata": {"topic": "taxes", "source": "Joint Committee on Taxation / Committee for a Responsible Federal Budget", "source_url": "https://www.crfb.org/"}
+    },
+    {
+      "id": "trump_stock_market",
+      "text": "The S&P 500 rose roughly 67% over Trump's term and, by the time he left office in January 2021, had recovered and exceeded its pre-COVID highs. The claim that the market was higher than pre-COVID when he left is accurate.",
+      "metadata": {"topic": "markets", "source": "S&P Dow Jones Indices", "source_url": "https://www.spglobal.com/spdji/"}
+    },
+    {
+      "id": "trump_disinfectant",
+      "text": "On April 23, 2020, Trump publicly mused about whether injecting disinfectant could treat COVID-19 ('is there a way we can do something like that, by injection inside'). He did not say 'inject bleach' verbatim; 'bleach' is a paraphrase of the disinfectant remark.",
+      "metadata": {"topic": "covid", "source": "White House briefing transcript, April 23 2020", "source_url": "https://www.factcheck.org/"}
+    },
+    {
+      "id": "inflation_trajectory",
+      "text": "U.S. inflation (CPI) peaked at about 9.1% in June 2022 and had fallen to roughly 3.0–3.3% by mid-2024. Inflation was elevated but declining at the time of the debate, not accelerating.",
+      "metadata": {"topic": "inflation", "source": "U.S. Bureau of Labor Statistics CPI", "source_url": "https://www.bls.gov/cpi/"}
+    },
+    {
+      "id": "tariff_incidence",
+      "text": "Economic studies (Federal Reserve, academic research) find that U.S. tariffs are paid by American importers and largely passed on to U.S. consumers and businesses — not paid by foreign countries. A broad 10% import tariff would tend to raise consumer prices.",
+      "metadata": {"topic": "tariffs", "source": "Federal Reserve / peer-reviewed trade economics", "source_url": "https://www.federalreserve.gov/"}
+    },
+    {
+      "id": "national_debt_trump",
+      "text": "The national debt rose by about $7.8 trillion during Trump's term, and the annual deficit hit record peacetime highs in 2020 (~$3.1 trillion) due to COVID relief. Deficits rose substantially under his administration.",
+      "metadata": {"topic": "debt", "source": "U.S. Treasury / CBO", "source_url": "https://fiscaldata.treasury.gov/"}
+    },
+    {
+      "id": "insulin_cap",
+      "text": "The Inflation Reduction Act capped insulin at $35 per month for Medicare beneficiaries (effective 2023). It also caps total annual out-of-pocket drug costs for Medicare at $2,000 starting in 2025. Specific '$15', '$200' and '$400' figures are often muddled, but the $35 insulin cap is real.",
+      "metadata": {"topic": "healthcare", "source": "Centers for Medicare & Medicaid Services", "source_url": "https://www.cms.gov/"}
+    },
+    {
+      "id": "grocery_home_prices",
+      "text": "Consumer prices rose roughly 19–20% cumulatively from January 2021 to mid-2024; grocery prices rose about 21%. National home prices rose more than 30% over the same period. The moderators' framing of higher essentials and ~30% home price gains is accurate.",
+      "metadata": {"topic": "prices", "source": "BLS CPI / S&P CoreLogic Case-Shiller", "source_url": "https://www.bls.gov/cpi/"}
+    },
+    {
+      "id": "trump_gdp_growth",
+      "text": "Real GDP growth under Trump averaged about 2.5% per year before COVID — solid but not historically exceptional; growth was higher in periods such as the late 1990s. The pre-pandemic economy was strong but the claim of 'the greatest economy in the history of our country' is hyperbole.",
+      "metadata": {"topic": "economy", "source": "Bureau of Economic Analysis", "source_url": "https://www.bea.gov/"}
+    },
+    {
+      "id": "afghanistan_troops",
+      "text": "U.S. combat deaths in Afghanistan continued during Trump's term (e.g., service members killed in 2019–2020). The U.S. withdrawal from Afghanistan occurred in August 2021 under Biden, during which 13 U.S. service members were killed in the Abbey Gate bombing.",
+      "metadata": {"topic": "foreign_policy", "source": "U.S. Department of Defense", "source_url": "https://www.defense.gov/"}
+    },
+    {
+      "id": "foreign_born_employment",
+      "text": "Job gains under Biden went to both native-born and foreign-born workers; native-born employment also grew over the recovery. The claim that 'the only jobs created are for illegal immigrants' is false — most employment gains were not unauthorized immigrants.",
+      "metadata": {"topic": "jobs", "source": "BLS Current Population Survey", "source_url": "https://www.bls.gov/cps/"}
+    },
+    {
+      "id": "covid_deaths",
+      "text": "More than 400,000 Americans had died of COVID-19 by the time Trump left office in January 2021; the U.S. total exceeded 1 million by 2022. The pandemic's early U.S. response drew significant criticism from public-health experts.",
+      "metadata": {"topic": "covid", "source": "U.S. Centers for Disease Control and Prevention", "source_url": "https://www.cdc.gov/"}
+    },
+    {
+      "id": "prescription_drug_ira",
+      "text": "The Inflation Reduction Act (2022) lets Medicare negotiate prices on selected high-cost drugs for the first time and caps Medicare out-of-pocket drug spending. It was enacted under Biden.",
+      "metadata": {"topic": "healthcare", "source": "Congressional Budget Office", "source_url": "https://www.cbo.gov/"}
+    },
+    {
+      "id": "deficit_record_claim",
+      "text": "The federal budget deficit reached a record ~$3.1 trillion in fiscal year 2020 under Trump, largely from pandemic relief spending. Biden's claim that Trump 'raised the deficit larger than any president in one term' is broadly supported for a single year.",
+      "metadata": {"topic": "debt", "source": "Congressional Budget Office", "source_url": "https://www.cbo.gov/"}
+    }
+  ]
+}

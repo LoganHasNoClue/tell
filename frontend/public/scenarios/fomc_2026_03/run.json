@@ -1,0 +1,2707 @@
+[
+  {
+    "t": 0.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 0.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 1.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 1.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 2.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 2.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 3.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 3.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 4.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 4.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 5.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 5.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 6.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 6.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 7.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 7.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 8.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 8.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 9.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 9.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 10.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 10.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 11.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 11.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 12.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 12.5,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 13.0,
+    "our_prob": 0.6,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "the labor market has shown clear signs of softening",
+        "effect": 0.03,
+        "why": "dovish; cooling jobs raise cut odds"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 13.5,
+    "our_prob": 0.6022,
+    "delta": 0.0022,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 14.0,
+    "our_prob": 0.6078,
+    "delta": 0.0056,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 14.5,
+    "our_prob": 0.615,
+    "delta": 0.0072,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 15.0,
+    "our_prob": 0.6222,
+    "delta": 0.0072,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 15.5,
+    "our_prob": 0.6278,
+    "delta": 0.0056,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 16.0,
+    "our_prob": 0.63,
+    "delta": 0.0022,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 16.5,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 17.0,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 17.5,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 18.0,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 18.5,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 19.0,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 19.5,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 20.0,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 20.5,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 21.0,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 21.5,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.25,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 22.0,
+    "our_prob": 0.63,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "downside risks to employment have risen in recent months",
+        "effect": 0.045,
+        "why": "dovish; tilts the committee toward easing"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 22.5,
+    "our_prob": 0.6333,
+    "delta": 0.0033,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 23.0,
+    "our_prob": 0.6417,
+    "delta": 0.0084,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 23.5,
+    "our_prob": 0.6525,
+    "delta": 0.0108,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 24.0,
+    "our_prob": 0.6633,
+    "delta": 0.0108,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 24.5,
+    "our_prob": 0.6717,
+    "delta": 0.0084,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 25.0,
+    "our_prob": 0.675,
+    "delta": 0.0033,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 25.5,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 26.0,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 26.5,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 27.0,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 27.5,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 28.0,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 28.5,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 29.0,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 29.5,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 30.0,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 30.5,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 31.0,
+    "our_prob": 0.675,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "we are prepared to adjust the stance of policy as appropriate",
+        "effect": 0.035,
+        "why": "signals readiness to move"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 31.5,
+    "our_prob": 0.6776,
+    "delta": 0.0026,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 32.0,
+    "our_prob": 0.6841,
+    "delta": 0.0065,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 32.5,
+    "our_prob": 0.6925,
+    "delta": 0.0084,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 33.0,
+    "our_prob": 0.7009,
+    "delta": 0.0084,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 33.5,
+    "our_prob": 0.7074,
+    "delta": 0.0065,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 34.0,
+    "our_prob": 0.71,
+    "delta": 0.0026,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 34.5,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 35.0,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 35.5,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 36.0,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 36.5,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 37.0,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 37.5,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 38.0,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 38.5,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 39.0,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 39.5,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.45,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 40.0,
+    "our_prob": 0.71,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "the time to support the labor market is now, not later",
+        "effect": 0.04,
+        "why": "strong dovish; urgency to ease"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 40.5,
+    "our_prob": 0.713,
+    "delta": 0.003,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 41.0,
+    "our_prob": 0.7204,
+    "delta": 0.0074,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 41.5,
+    "our_prob": 0.73,
+    "delta": 0.0096,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 42.0,
+    "our_prob": 0.7396,
+    "delta": 0.0096,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 42.5,
+    "our_prob": 0.747,
+    "delta": 0.0074,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 43.0,
+    "our_prob": 0.75,
+    "delta": 0.003,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 43.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 44.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 44.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 45.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 45.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 46.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 46.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 47.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 47.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 48.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 48.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 49.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 49.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 50.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 50.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 51.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 51.5,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 52.0,
+    "our_prob": 0.75,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "we remain data-dependent and will move carefully",
+        "effect": -0.06,
+        "why": "hedge; lowers commitment to a cut"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 52.5,
+    "our_prob": 0.7438,
+    "delta": -0.0062,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 53.0,
+    "our_prob": 0.7289,
+    "delta": -0.0149,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 53.5,
+    "our_prob": 0.7111,
+    "delta": -0.0178,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 54.0,
+    "our_prob": 0.6962,
+    "delta": -0.0149,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 54.5,
+    "our_prob": 0.69,
+    "delta": -0.0062,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 55.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 55.5,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 56.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 56.5,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 57.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 57.5,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 58.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 58.5,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 59.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 59.5,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 60.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 60.5,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 61.0,
+    "our_prob": 0.69,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "I would not want to prejudge the outcome of this meeting",
+        "effect": -0.02,
+        "why": "dodge; weak directional signal"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 61.5,
+    "our_prob": 0.6879,
+    "delta": -0.0021,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 62.0,
+    "our_prob": 0.683,
+    "delta": -0.0049,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 62.5,
+    "our_prob": 0.677,
+    "delta": -0.006,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 63.0,
+    "our_prob": 0.6721,
+    "delta": -0.0049,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 63.5,
+    "our_prob": 0.67,
+    "delta": -0.0021,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 64.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 64.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 65.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 65.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 66.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 66.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 67.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 67.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 68.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 68.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 69.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 69.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.35,
+      "hedging": 0.72,
+      "momentum": null
+    }
+  },
+  {
+    "t": 70.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 70.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 71.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 71.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 72.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 72.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 73.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 73.5,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.6,
+      "hedging": 0.25,
+      "momentum": null
+    }
+  },
+  {
+    "t": 74.0,
+    "our_prob": 0.67,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "if the labor market were to weaken further, we would respond",
+        "effect": 0.03,
+        "why": "reaction function tilts dovish"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 74.5,
+    "our_prob": 0.6722,
+    "delta": 0.0022,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 75.0,
+    "our_prob": 0.6778,
+    "delta": 0.0056,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 75.5,
+    "our_prob": 0.685,
+    "delta": 0.0072,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 76.0,
+    "our_prob": 0.6922,
+    "delta": 0.0072,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 76.5,
+    "our_prob": 0.6978,
+    "delta": 0.0056,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 77.0,
+    "our_prob": 0.7,
+    "delta": 0.0022,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 77.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 78.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 78.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 79.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 79.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 80.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 80.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 81.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 81.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 82.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 82.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 83.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 83.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 84.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 84.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 85.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 85.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 86.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 86.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 87.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 87.5,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.5,
+      "hedging": 0.45,
+      "momentum": null
+    }
+  },
+  {
+    "t": 88.0,
+    "our_prob": 0.7,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "a number on the committee saw a cut as appropriate today",
+        "effect": 0.045,
+        "why": "near-explicit; many favor a cut"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 88.5,
+    "our_prob": 0.7033,
+    "delta": 0.0033,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 89.0,
+    "our_prob": 0.7117,
+    "delta": 0.0084,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 89.5,
+    "our_prob": 0.7225,
+    "delta": 0.0108,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 90.0,
+    "our_prob": 0.7333,
+    "delta": 0.0108,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 90.5,
+    "our_prob": 0.7417,
+    "delta": 0.0084,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 91.0,
+    "our_prob": 0.745,
+    "delta": 0.0033,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 91.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 92.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 92.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 93.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 93.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 94.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 94.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 95.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 95.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 96.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 96.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 97.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 97.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 98.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 98.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 99.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 99.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 100.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 100.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 101.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 101.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 102.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 102.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 103.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 103.5,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 104.0,
+    "our_prob": 0.745,
+    "delta": 0.0,
+    "drivers": [
+      {
+        "quote": "we are attentive to the risks on both sides of our mandate",
+        "effect": 0.02,
+        "why": "balanced, mild dovish lean"
+      }
+    ],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 104.5,
+    "our_prob": 0.7465,
+    "delta": 0.0015,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 105.0,
+    "our_prob": 0.7502,
+    "delta": 0.0037,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 105.5,
+    "our_prob": 0.755,
+    "delta": 0.0048,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 106.0,
+    "our_prob": 0.7598,
+    "delta": 0.0048,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 106.5,
+    "our_prob": 0.7635,
+    "delta": 0.0037,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 107.0,
+    "our_prob": 0.765,
+    "delta": 0.0015,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 107.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 108.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 108.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 109.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 109.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 110.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 110.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 111.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 111.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 112.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 112.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 113.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 113.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 114.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 114.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 115.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 115.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 116.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 116.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 117.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 117.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 118.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 118.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 119.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 119.5,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  },
+  {
+    "t": 120.0,
+    "our_prob": 0.765,
+    "delta": 0.0,
+    "drivers": [],
+    "subsignals": {
+      "hawk_dove": -0.62,
+      "hedging": 0.3,
+      "momentum": null
+    }
+  }
+]
