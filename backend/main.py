@@ -170,6 +170,35 @@ def _transcribe_file(path: str) -> str:
     return " ".join(s.text.strip() for s in segments).strip()
 
 
+@app.get("/api/stt-info")
+def stt_info():
+    """Which live STT the frontend should use: real-time AssemblyAI if keyed, else Groq."""
+    return {"provider": "assemblyai" if os.getenv("ASSEMBLYAI_API_KEY") else "groq"}
+
+
+@app.get("/api/stt-token")
+async def stt_token():
+    """Mint a short-lived AssemblyAI streaming token so the browser can stream
+    audio directly to AssemblyAI (the real key never reaches the client)."""
+    key = os.getenv("ASSEMBLYAI_API_KEY")
+    if not key:
+        return {"token": None}
+    try:
+        import httpx
+
+        async with httpx.AsyncClient(timeout=10) as c:
+            r = await c.get(
+                "https://streaming.assemblyai.com/v3/token",
+                params={"expires_in_seconds": 600},
+                headers={"Authorization": key},
+            )
+            r.raise_for_status()
+            return {"token": r.json().get("token")}
+    except Exception as e:
+        print(f"[stt-token] {e}")
+        return {"token": None}
+
+
 @app.post("/api/transcribe")
 async def api_transcribe(audio: UploadFile = File(...)):
     """Transcribe one short audio chunk captured live from the playing video."""

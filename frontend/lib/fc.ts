@@ -92,6 +92,9 @@ let ringRate = 48000;
 let slideTimer: ReturnType<typeof setInterval> | null = null;
 let inFlight = false;
 let backoffUntil = 0;
+let aaiWs: WebSocket | null = null; // AssemblyAI real-time stream (when keyed)
+let aaiTurnTimer: ReturnType<typeof setTimeout> | null = null;
+let streaming = false;
 let judgedTokens: Set<string>[] = []; // token-sets of already-checked sentences
 
 function _tokens(s: string): Set<string> {
@@ -288,8 +291,15 @@ export const useFC = create<FCState>((set, get) => {
         workletNode = new AudioWorkletNode(audioCtx, "pcm-processor");
         workletNode.port.onmessage = (e) => {
           if (!capturing) return;
-          frames.push(e.data as Float32Array);
-          framesLen += (e.data as Float32Array).length;
+          const frame = e.data as Float32Array;
+          if (streaming && aaiWs && aaiWs.readyState === WebSocket.OPEN) {
+            // TRUE real-time: stream each PCM frame straight to AssemblyAI
+            aaiWs.send(toPcm16(frame, ringRate).buffer);
+            return;
+          }
+          // Groq fallback: keep a rolling buffer for the windowed transcribe
+          frames.push(frame);
+          framesLen += frame.length;
           const keep = Math.floor(ringRate * (WINDOW_S + 2));
           while (framesLen > keep && frames.length > 1) {
             framesLen -= frames[0].length;
@@ -297,12 +307,54 @@ export const useFC = create<FCState>((set, get) => {
           }
         };
       }
-      srcNode.connect(workletNode); // tap PCM for streaming STT
+      srcNode.connect(workletNode); // tap PCM for STT
       frames = [];
       framesLen = 0;
       capturing = true;
-      if (slideTimer) clearInterval(slideTimer);
-      slideTimer = setInterval(transcribeWindow, SLIDE_MS);
+
+      // prefer real-time AssemblyAI streaming if a key is configured
+      streaming = false;
+      try {
+        const tk = await fetch(`${API}/api/stt-token`).then((r) => r.json());
+        if (tk.token) {
+          const ws = new WebSocket(
+            `wss://streaming.assemblyai.com/v3/ws?sample_rate=${STT_SR}&format_turns=true` +
+              `&min_end_of_turn_silence_when_confident=240&max_turn_silence=1200&token=${tk.token}`
+          );
+          ws.binaryType = "arraybuffer";
+          ws.onmessage = (ev) => {
+            let m: any;
+            try { m = JSON.parse(ev.data); } catch { return; }
+            if (m.type !== "Turn") return;
+            const tx = (m.transcript || "").trim();
+            if (tx) set({ caption: tx }); // live partial words as spoken
+            // fact-check the utterance on turn-end, or after a ~1.1s pause if the
+            // speaker keeps going (debate speech rarely hits a formal turn-end).
+            const fire = () => {
+              if (tx.length > 4 && !_seenBefore(tx)) {
+                judgedTokens.push(_tokens(tx));
+                if (judgedTokens.length > 60) judgedTokens.shift();
+                judgeLive(tx);
+              }
+            };
+            if (aaiTurnTimer) clearTimeout(aaiTurnTimer);
+            if (m.end_of_turn) fire();
+            else aaiTurnTimer = setTimeout(fire, 1100);
+          };
+          ws.onclose = () => { if (aaiWs === ws) { aaiWs = null; streaming = false; } };
+          ws.onerror = () => {};
+          aaiWs = ws;
+          streaming = true;
+        }
+      } catch {
+        streaming = false;
+      }
+
+      if (!streaming) {
+        // Groq rolling-window fallback
+        if (slideTimer) clearInterval(slideTimer);
+        slideTimer = setInterval(transcribeWindow, SLIDE_MS);
+      }
     } catch (e) {
       console.warn("[fc] live capture failed", e);
     }
@@ -314,6 +366,13 @@ export const useFC = create<FCState>((set, get) => {
       clearInterval(slideTimer);
       slideTimer = null;
     }
+    if (aaiTurnTimer) { clearTimeout(aaiTurnTimer); aaiTurnTimer = null; }
+    if (aaiWs) {
+      try { aaiWs.send(JSON.stringify({ type: "Terminate" })); } catch { /* ignore */ }
+      try { aaiWs.close(); } catch { /* ignore */ }
+      aaiWs = null;
+    }
+    streaming = false;
     if (srcNode && workletNode) {
       try { srcNode.disconnect(workletNode); } catch { /* ignore */ }
     }
