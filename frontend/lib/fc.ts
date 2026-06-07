@@ -17,6 +17,8 @@ export interface Claim {
   source: string;
   source_url: string;
   topic: string;
+  via?: string; // "moss" | "local" — which retriever served this (live mode)
+  moss_ms?: number; // retrieval latency in ms (live mode)
 }
 
 export interface FactCheckFile {
@@ -83,6 +85,7 @@ interface FCState {
   live: boolean; // true = compute verdicts from the backend per claim, in real time
   liveResults: Record<number, Claim>;
   mossActive: boolean;
+  lastMoss: { ms: number; count: number } | null;
 
   videoEl: HTMLVideoElement | null;
 
@@ -138,8 +141,13 @@ export const useFC = create<FCState>((set, get) => {
         source: v.source || "",
         source_url: v.source_url || "",
         topic: v.topic || c.topic || "",
+        via: v.via,
+        moss_ms: v.moss_ms,
       };
-      set({ liveResults: { ...get().liveResults, [c.i]: merged } });
+      set({
+        liveResults: { ...get().liveResults, [c.i]: merged },
+        lastMoss: { ms: v.moss_ms ?? 0, count: v.retrieved_count ?? 0 },
+      });
       apply(get().t);
     } catch (e) {
       console.warn("[fc] live check failed", e);
@@ -162,9 +170,12 @@ export const useFC = create<FCState>((set, get) => {
 
       if (live) {
         vc = liveResults[c.i];
-        if (due && !vc) {
-          checkClaim(c); // fire live retrieval+judgment
-          analyzing = c; // still checking
+        // only verify claims near the playhead (as they're spoken) — never
+        // backfill the whole past on a seek, which would flood Moss/the LLM.
+        const recent = due && t - c.t < 8;
+        if (recent && !vc) {
+          checkClaim(c); // fire live retrieval + judgment for THIS claim, now
+          analyzing = c;
         }
         resolved = due && !!vc;
       } else {
@@ -258,6 +269,7 @@ export const useFC = create<FCState>((set, get) => {
     live: false,
     liveResults: {},
     mossActive: false,
+    lastMoss: null,
     videoEl: null,
 
     async setLive(on: boolean) {
@@ -302,7 +314,12 @@ export const useFC = create<FCState>((set, get) => {
           popups: [],
           analyzing: null,
           caption: "",
+          live: false,
+          liveResults: {},
         });
+        // default to LIVE: genuinely query Moss + LLM per claim at runtime.
+        // Falls back to the precomputed REPLAY run only if the backend is down.
+        get().setLive(true).catch(() => {});
       } catch (e) {
         console.error("fc load failed", e);
         set({ status: "error" });

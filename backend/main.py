@@ -63,7 +63,9 @@ _pipes: dict[str, FactCheckPipeline] = {}
 
 async def _get_pipe(scenario_id: str) -> FactCheckPipeline:
     if scenario_id not in _pipes:
-        p = FactCheckPipeline(scenario_id)
+        # use_cache=False => the live endpoint queries Moss + the LLM for every
+        # claim at runtime (no pre-loaded verdicts). This is the real-time path.
+        p = FactCheckPipeline(scenario_id, use_cache=False)
         await p.ensure_ready()
         _pipes[scenario_id] = p
     return _pipes[scenario_id]

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 from pathlib import Path
 
 from .checker import Checker
@@ -76,13 +77,20 @@ class FactCheckPipeline:
         self.cache_path.write_text(json.dumps(self._cache, indent=2))
 
     async def check(self, claim_text: str) -> dict:
-        """Retrieve facts for a claim and judge it. Cached by claim text."""
+        """Retrieve facts for a claim (Moss) and judge it (LLM). Live retrieval is
+        timed and reported. Cache is OFF for the live path so Moss runs every time."""
         key = self._key(claim_text)
         if self.use_cache and key in self._cache:
             return self._cache[key]
 
+        t0 = time.perf_counter()
         facts = await self.store.retrieve(claim_text, top_k=3)
+        moss_ms = round((time.perf_counter() - t0) * 1000, 1)
+
         verdict = await self.checker.judge(claim_text, facts)
+        verdict["via"] = "moss" if self.store.using_moss else "local"
+        verdict["moss_ms"] = moss_ms
+        verdict["retrieved_count"] = len(facts)
         verdict["retrieved"] = [
             {"text": f["text"][:160], "score": f["score"],
              "source": f.get("metadata", {}).get("source", "")}

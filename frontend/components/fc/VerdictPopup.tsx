@@ -75,6 +75,11 @@ export default function VerdictPopup({
               <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
             <span className="text-[10px] tracking-wide text-white/40">{claim.source}</span>
+            {claim.via === "moss" && claim.moss_ms != null && (
+              <span className="ml-auto text-[9px] tracking-wide text-[var(--green)]/70">
+                retrieved via Moss · {claim.moss_ms}ms
+              </span>
+            )}
           </div>
         )}
       </div>

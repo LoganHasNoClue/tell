@@ -11,6 +11,7 @@ export default function FCStage() {
   const caption = useFC((s) => s.caption);
   const analyzing = useFC((s) => s.analyzing);
   const playing = useFC((s) => s.playing);
+  const live = useFC((s) => s.live);
   const [muted, setMuted] = useState(false);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function FCStage() {
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-[var(--blue)]" />
               </span>
               <span className="text-[11px] font-medium tracking-wide text-white/85">
-                Checking claim…
+                {live ? "Querying Moss…" : "Checking claim…"}
               </span>
             </div>
           </motion.div>

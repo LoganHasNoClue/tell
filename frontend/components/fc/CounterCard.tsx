@@ -31,6 +31,17 @@ function Stat({
 export default function CounterCard() {
   const c = useFC((s) => s.counter);
   const mode = useFC((s) => s.mode);
+  const live = useFC((s) => s.live);
+  const mossActive = useFC((s) => s.mossActive);
+  const lastMoss = useFC((s) => s.lastMoss);
+
+  const label = live
+    ? mossActive
+      ? lastMoss
+        ? `Moss · ${lastMoss.ms}ms`
+        : "Moss · live"
+      : "live"
+    : `replay: ${mode || "…"}`;
 
   return (
     <div className="glass rounded-2xl p-5">
@@ -39,8 +50,11 @@ export default function CounterCard() {
           FACT-CHECK
         </span>
         <span className="flex items-center gap-1.5 text-[10px] tracking-wide text-white/40">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--green)] blink" />
-          retrieval: {mode || "…"}
+          <span
+            className="h-1.5 w-1.5 rounded-full blink"
+            style={{ backgroundColor: live ? "var(--green)" : "rgba(255,255,255,0.4)" }}
+          />
+          {label}
         </span>
       </div>
 
